@@ -31,9 +31,14 @@ import Footer from '@/Components/Footer.vue';
                 </div>
             </div>
              <div class="z-50">
-                <img src="/files/images/tvati.png" alt="Smart Meter" class="w-30">
+                <div>
+                    <img src="/files/images/tvati.png" alt="Smart Meter" class="w-30">
+                <img src="/files/images/jed logo.png" alt="Smart Meter" class="w-30">
+                <img src="/files/images/technovati.png" alt="Smart Meter" class="w-30">
+                </div>
              </div>
-        </div>
+            </div>
+            <Footer class="mt-auto"/>
 
        
    
@@ -60,7 +65,7 @@ import Footer from '@/Components/Footer.vue';
 .wrapper {
     position: relative;
     width: 100%;
-    height: 100vh;
+    min-height: 90vh;
     align-items: center;
     padding:  0;
     overflow: hidden;
@@ -91,7 +96,7 @@ import Footer from '@/Components/Footer.vue';
 .main-content {
     position: relative;
     width: 100%;
-    height: calc(100vh -40px);
+    min-height: calc(100vh -40px);
     padding: 50px 8% 0;
     display: flex;
     align-items: center;

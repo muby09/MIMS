@@ -256,7 +256,7 @@ class MeterController extends Controller
             'zone' => 'required',
             'state' => 'required',
             'doi' => 'nullable|date',
-            'dt_name' => 'required',
+            // 'dt_name' => 'required',
             'dt_code' => 'nullable',
             'dt_type' => 'nullable',
             'upriser' => 'nullable|numeric',
