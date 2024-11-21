@@ -18,12 +18,20 @@
     
     const showForm = (data) => {
         showModal.value = true;
-        meterForm.value.fullname = data.account_name
+        meterForm.value.meter_number = data.allocated_meter_number
+        meterForm.value.fullname = data.customer_name
         meterForm.value.dt_name = data.dt_name
         meterForm.value.account_no = data.account_number
         meterForm.value.address = data.address
+        meterForm.value.business_unit = data.business_unit
+        meterForm.value.gsm = data.phone_no
     }
    
+// meter_type
+
+// address
+
+// feeder_name
 
 
     const tariffs = [
@@ -648,18 +656,19 @@
                     <thead class="bg-gray-50 border-b-2 border-gray-200">
                         <tr>
                             <th width ="5%" class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">S/N</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Region</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Account Number</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Account Name</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Address</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">33Kv feeder</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">11kv Feeder</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">DT Name</th>
-                            <!--<th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Band</th> -->
-                            <!--<th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Expected Load (In Amps)</th> -->
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Meter Type</th>
-                            <!--<th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Connection Status</th> -->
-                            <!-- <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">contact information</th> -->
+                            <!-- <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Region</th> -->
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">ALLOCATED METER NUMBER</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">ACCOUNT NUMBER</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">METER TYPE</th>
+                           <!---<th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">map</th> -->
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">CUSTOMER NAME</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">ADDRESS</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">PHONE NO</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">FEEDER NAME</th>
+                            <!--- <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Business Unit</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">state</th>
+                           <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">total_billings</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">total_settlement</th> -->
                             <th width ="5%"  class="p-3 text-sm font-semibold tracking-wide text-left table-bordered"> 
                                 <font-awesome-icon class="fa-solid fas fa-cog"/>
                             </th>
@@ -668,18 +677,19 @@
                     <tbody>
                         <tr class="bg-white" v-for="(item,loop) in schedules" :key="loop">
                             <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ loop+1 }}</td>
-                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.region }}</td>
+                           <!--<td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.region?.region }}</td> -->
+                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.allocated_meter_number }}</td>
                             <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.account_number }}</td>
-                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.account_name }}</td>
-                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.address }}</td>
-                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.feeder_33 }}</td>
-                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.feeder_11 }}</td>
-                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.dt_name }}</td>
-                            <!--<td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.band }}</td>-->
-                            <!--<td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.load }}</td>-->
                             <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.meter_type }}</td>
-                            <!--<td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.connection_status }}</td>-->
-                            <!--<td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.contact }}</td>-->
+                           <!-- <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.map }}</td> -->
+                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.customer_name }}</td>
+                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.address }}</td>
+                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.phone_no }}</td>
+                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.feeder_name }}</td>
+                            <!--<td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.business_unit }}</td>
+                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.state }}</td>
+                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.total_billings }}</td>
+                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.total_settlement }}</td> -->
                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered" >
                                 <button class="p-1 oy-1 text-sm bg-optimal text-white me-2 inline-block rounded" @click="showForm(item)">Record</button>
                             </td>

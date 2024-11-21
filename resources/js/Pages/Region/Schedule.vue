@@ -6,6 +6,7 @@
     import InputLabel from '@/Components/InputLabel.vue';
     import TextInput from '@/Components/TextInput.vue';
 import { Inertia } from '@inertiajs/inertia';
+    import PaginationLinks from '@/Components/PaginationLinks.vue';
 
     defineProps({
         data:Array
@@ -22,8 +23,8 @@ const submit = () => {
         onFinish: () => form.reset(),
     });
 };
-const changePage = (url) => {
-    Inertia.get(url, {}, { preserveState: true, preserveScroll: true });
+const changePage = (link) => {
+    Inertia.get(link.url, {}, { preserveState: true, preserveScroll: true });
     // store.dispatch('getMethod', { url:url }).then((data) => {
     //     console.log(data);
     //     if (data?.status == 200) {
@@ -49,7 +50,7 @@ const changePage = (url) => {
                     <div>
                         <div class="flex justify-between">
                             <InputLabel for="file" value="Excel File" />
-                            <a href="/files/images/MAF data.xlsx" class="text-optimal font-bold">Download File</a>
+                            <a href="/files/images/Approved Shedule template.xlsx" class="text-optimal font-bold">Download File</a>
                         </div>
                         <TextInput
                             id="file"
@@ -69,42 +70,42 @@ const changePage = (url) => {
         </form>
 
         <div class="overflow-auto rounded-lg shadow">
+           
                 <table class="w-full">
                     <thead class="bg-gray-50 border-b-2 border-gray-200">
                         <tr>
                             <th width ="5%" class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">S/N</th>
                             <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Region</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Account Number</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Account Name</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Address</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">33Kv feeder</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">11kv Feeder</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">DT Name</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Band</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Expected Load (In Amps)</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Meter Type</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Connection Status</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">contact information</th>
-                           <!--- <th width ="5%"  class="p-3 text-sm font-semibold tracking-wide text-left"> 
-                                <font-awesome-icon class="fa-solid fas fa-cog"/>
-                            </th> -->
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">allocated_meter_number</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">account_number</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">meter_type</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">map</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">customer_name</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">address</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">phone_no</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">feeder_name</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">business_unit</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">state</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">total_billings</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">total_settlement</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="bg-white" v-for="(item,loop) in data?.data" :key="loop">
                             <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ loop+1 }}</td>
-                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.region }}</td>
+                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.region?.region }}</td>
+                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.allocated_meter_number }}</td>
                             <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.account_number }}</td>
-                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.account_name }}</td>
-                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.address }}</td>
-                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.feeder_33 }}</td>
-                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.feeder_11 }}</td>
-                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.dt_name }}</td>
-                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.band }}</td>
-                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.load }}</td>
                             <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.meter_type }}</td>
-                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.connection_status }}</td>
-                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.contact }}</td>
+                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.map }}</td>
+                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.customer_name }}</td>
+                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.address }}</td>
+                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.phone_no }}</td>
+                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.feeder_name }}</td>
+                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.business_unit }}</td>
+                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.state }}</td>
+                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.total_billings }}</td>
+                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.total_settlement }}</td>
                           <!--  <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered" >
                                 <button class="p-1 oy-1 text-sm bg-yellow-500 text-white me-2 inline-block" @click="editItem(item)">Edit</button>
                             </td> -->
@@ -114,13 +115,12 @@ const changePage = (url) => {
                 
                 
         </div>
-        <div class="mt-4 mb-1">
-                     <!-- Render the pagination links -->
-                    <nav v-if="data?.links?.length">
-                        <button @click="changePage(data?.prev_page_url)" :disabled="!data?.prev_page_url" class="px-4 py-2 bg-gray-300 rounded disabled:opacity-50">Previous</button>
-                        <button @click="changePage(data?.next_page_url)" :disabled="!data?.next_page_url" class="px-4 py-2 bg-gray-300 rounded disabled:opacity-50">Next</button>
-                    </nav>
-                </div>
+        <div class="mt-4">
+            <div class="flex space-x-1">
+                <pagination-links v-for="(link, i) of data.links" :link="link" :key="i"
+                    @next="changePage($event,link)"></pagination-links>
+            </div>
+        </div>
         </div>
     </MainLayout>
 </template>

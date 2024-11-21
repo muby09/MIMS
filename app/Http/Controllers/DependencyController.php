@@ -45,7 +45,7 @@ class DependencyController extends Controller
     public function schedules(){
         
         try {
-            $data = Schedule::where('region_pid',getRegionPid())->paginate(20);
+            $data = Schedule::with('region')->where('region_pid',getRegionPid())->paginate(50);
             return Inertia::render('Region/Schedule', ['data' => $data]);
         } catch (\Throwable $e) {
             logError($e->getMessage());
@@ -55,7 +55,7 @@ class DependencyController extends Controller
     public function scheduleList(){
         
         try {
-            $data = Schedule::where('region_pid',getRegionPid())->limit(50)->get();
+            $data = Schedule::with('region')->where('region_pid',getRegionPid())->limit(50)->get();
            return pushData($data);
         } catch (\Throwable $e) {
             logError($e->getMessage());

@@ -9,8 +9,13 @@ class Schedule extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'account_number' ,  'account_name' , 'contact' , 'state' , 'region' , 'feeder_33' , 'feeder_11' , 'dt_name' , 'band' , 'load' ,
-         'meter_type' , 'address' , 'connection_status',
-        'region_pid'
+        'region_pid' , 'pid' , 'allocated_meter_number' , 'account_number' , 'meter_type' , 'map' , 'customer_name' ,
+        'address' , 'phone_no' ,'feeder_name' , 'business_unit' , 'state' , 'total_billings' , 'total_settlement',
+        'creator'
     ];
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class, 'region_pid', 'pid');
+    }
 }
