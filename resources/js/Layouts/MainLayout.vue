@@ -2,6 +2,7 @@
 import AuthHeader from '@/Components/AuthHeader.vue';
 import Footer from '@/Components/Footer.vue';
 import SideBar from '@/Components/SideBar.vue';
+import Flash from '@/Components/Flash.vue';
 import { onMounted } from 'vue';
 
  onMounted(() => {
@@ -34,6 +35,7 @@ import { onMounted } from 'vue';
             <!--content-->
                 <div class="flex w-full mx-auto px-6 py-1">
                     <div class="flex flex-col w-full h-full">
+                        <div class="mx-auto"><Flash/></div>
                         <slot/>
                     </div>
                 </div>

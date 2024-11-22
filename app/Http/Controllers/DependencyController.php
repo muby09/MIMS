@@ -8,13 +8,16 @@ use App\Models\Region\Schedule;
 use Illuminate\Validation\Rule;
 use App\Imports\ImportScheduleList;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Models\Admin\Feeder\TradingZone;
-use App\Models\Admin\Meter\MeterBrand;
 use App\Models\Admin\Meter\MeterType;
+use App\Models\Admin\Meter\MeterBrand;
+use Maatwebsite\Excel\HeadingRowImport;
+use App\Models\Admin\Feeder\TradingZone;
 use Illuminate\Support\Facades\Validator;
 
 class DependencyController extends Controller
 {
+    private $header = ["sn", "allocated_meter_number", "account_number", "meter_type", "map", "customer_name", "address", "phone_no", "feeder_name", "business_unit", "state", "total_billings", "total_settlement"];
+    private $headings  = "S/N,	ALLOCATED METER NUMBER,	ACCOUNT NUMBER,	METER TYPE,	MAP,	CUSTOMER NAME,	ADDRESS	PHONE NO,	FEEDER NAME,	Business Unit,	STATE,	Total Billings, 	Total Settlement";
     
     public function index(){
         
@@ -45,7 +48,7 @@ class DependencyController extends Controller
     public function schedules(){
         
         try {
-            logError(getRegionPid());
+            // logError(getRegionPid());
             $data = Schedule::with('region')->where('region_pid',getRegionPid())->paginate(50);
             return Inertia::render('Region/Schedule', ['data' => $data]);
         } catch (\Throwable $e) {
@@ -68,6 +71,10 @@ class DependencyController extends Controller
             'file' => 'required|mimes:xlsx,xls,csv',
         ]);
         try {
+            $headings = (new HeadingRowImport)->toArray($request->file('file'));
+            if($headings[0][0] !== $this->header){
+                return back()->with('warning', "Use the template without changing/touching the headings!!!". PHP_EOL." {$this->headings}" );
+            }
             Excel::import(new ImportScheduleList, $request->file('file'));
             return back()->with('message', 'File imported successfully!');
         } catch (\Throwable $e) {

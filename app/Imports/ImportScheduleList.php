@@ -4,19 +4,22 @@ namespace App\Imports;
 
 use App\Models\Region\Schedule;
 use Maatwebsite\Excel\Concerns\ToModel;
+// use Maatwebsite\Excel\HeadingRowImport;
 use Maatwebsite\Excel\Concerns\WithGroupedHeadingRow;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class ImportScheduleList implements ToModel,WithGroupedHeadingRow
+class ImportScheduleList implements ToModel, WithHeadingRow
 {
     /**
     * @param array $row
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
+    
     public function model(array $row)
     {
-        // logError($row);
 
+        return ;
         return new Schedule([
             'region_pid' => getRegionPid(),
             'pid' => public_id(),
