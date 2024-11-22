@@ -30,10 +30,10 @@ class DependencyController extends Controller
     {
 
         try {
-            $data = Schedule::where('account_number', 'like', '%' . $query . '%')
-                ->orWhere('account_name', 'like', '%' . $query . '%')
-                ->orWhere('contact', 'like', '%' . $query . '%')->limit(15)->get();
-
+            $data = Schedule::where('allocated_meter_number', 'like', '%' . $query . '%')
+                ->orWhere('account_number', 'like', '%' . $query . '%')
+                ->orWhere('customer_name', 'like', '%' . $query . '%')
+                ->orWhere('phone_no', 'like', '%' . $query . '%')->limit(15)->get();
             return pushData($data);
         } catch (\Throwable $e) {
             logError($e->getMessage());
@@ -45,6 +45,7 @@ class DependencyController extends Controller
     public function schedules(){
         
         try {
+            logError(getRegionPid());
             $data = Schedule::with('region')->where('region_pid',getRegionPid())->paginate(50);
             return Inertia::render('Region/Schedule', ['data' => $data]);
         } catch (\Throwable $e) {

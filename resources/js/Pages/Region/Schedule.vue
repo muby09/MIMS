@@ -76,18 +76,18 @@ const changePage = (link) => {
                         <tr>
                             <th width ="5%" class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">S/N</th>
                             <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Region</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">allocated_meter_number</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">account_number</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">meter_type</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">map</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">customer_name</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">address</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">phone_no</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">feeder_name</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">business_unit</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">state</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">total_billings</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">total_settlement</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">ALLOCATED METER NUMBER</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">ACCOUNT NUMBER</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">METER TYPE</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">MAP</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">CUSTOMER NAME</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">ADDRESS</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">PHONE NO</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">FEEDER NAME</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">BUSINESS UNIT</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">STATE</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">TOTAL BILLINGS</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">TOTAL SETTLEMENT</th>
                         </tr>
                     </thead>
                     <tbody>
