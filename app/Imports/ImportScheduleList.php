@@ -19,7 +19,6 @@ class ImportScheduleList implements ToModel, WithHeadingRow
     public function model(array $row)
     {
 
-        return ;
         return new Schedule([
             'region_pid' => getRegionPid(),
             'pid' => public_id(),
