@@ -1,10 +1,9 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
-  import Flash from '@/Components/Flash.vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-
-import SpinnerLoader from '@/components/SpinnerLoader.vue';
-import Footer from '@/Components/Footer.vue';
+    import { Link } from '@inertiajs/vue3';
+    import Flash from '@/Components/Flash.vue';
+    import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+    import SpinnerLoader from '@/components/SpinnerLoader.vue';
+    import Footer from '@/Components/Footer.vue';
 </script>
 
 <template>
@@ -33,16 +32,15 @@ import Footer from '@/Components/Footer.vue';
              <div class="z-50">
                 <div>
                     <img src="/files/images/tvati.png" alt="Smart Meter" class="w-30">
-                <img src="/files/images/jed logo.png" alt="Smart Meter" class="w-30">
-                <img src="/files/images/technovati.png" alt="Smart Meter" class="w-30">
+                
                 </div>
              </div>
             </div>
-            <Footer class="mt-auto"/>
-
-       
-   
-</section>
+            
+            
+            
+        </section>
+        <Footer class="mt-auto"/>
 
         
    
@@ -61,15 +59,17 @@ import Footer from '@/Components/Footer.vue';
         --lightTwo:#aaa;
     }
 
+ 
 
 .wrapper {
     position: relative;
     width: 100%;
-    min-height: 90vh;
+    min-height: 95vh !important;
     align-items: center;
     padding:  0;
     overflow: hidden;
-    background: #919191;
+    background: #f1f1f1;
+    /* background: #919191; */
     /* background: #EDFBE2; */
     /* background: #54595F; */
 
@@ -81,7 +81,7 @@ import Footer from '@/Components/Footer.vue';
     width: 2000px;
     height: 2000px;
     border-radius: 50%;
-    background: linear-gradient(-45deg, #1f6e3d61, #2b322d);
+    background: linear-gradient(-45deg, #919191, #54595F);
     top: -10%;
     left: 48%;
     transform: translateY(-50%);
