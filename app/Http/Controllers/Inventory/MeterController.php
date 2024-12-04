@@ -294,6 +294,9 @@ class MeterController extends Controller
         if (!$validator->fails()) {
             try {
                 $installer = getInstallerSupervisor($request->installer);
+                if(!$installer){
+                    return responseMessage(status: 422, msg: 'No Supervisor assigned to selected installer team');
+                }
                 // logError($installer);
                 $data  = [
                     'pid' => $request->pid ?? public_id(),
