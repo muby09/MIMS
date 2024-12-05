@@ -353,7 +353,7 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-2"> 
                             <div class="flex flex-col ">
-                                        <InputLabel for="dt_name" value="DT Number" />
+                                        <InputLabel for="dt_name" value="DT Name" />
                                             <TextInput
                                                 id="dt_name"
                                                 type="text"
