@@ -352,7 +352,17 @@
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-2"> 
-
+                            <div class="flex flex-col ">
+                                        <InputLabel for="dt_code" value="DT Number" />
+                                            <TextInput
+                                                id="dt_code"
+                                                type="number"
+                                                class="mt-1 block w-full"
+                                                v-model="meterForm.dt_code"
+                                                placeholder="e.g 04"
+                                            />
+                                            <InputError class="mt-2" :message="meterForm?.errors?.dt_code" />
+                                    </div>
                                      <div class="flex flex-col ">
                                         <InputLabel for="upriser" value="Upriser" />
                                             <TextInput

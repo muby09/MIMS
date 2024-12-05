@@ -16,6 +16,7 @@ class TeamController extends Controller
     public function loadTeams(){
         try {
             $teams = Team::with('supervisor')->where('region_pid',getRegionPid())->get();
+            logError($teams);
            return pushData($teams);
         } catch (\Throwable $e) {
             logError($e->getMessage());
@@ -25,7 +26,9 @@ class TeamController extends Controller
     //
     public function loadTeamMembers(){
         try {
-            $teams = TeamMember::with(['user' => function($q){$q->select('username','user_pid', 'gsm');}])->with(['team'  => function($q){$q->select('team','pid');}])->where('region_pid',getRegionPid())->get();
+            $teams = TeamMember::with(['user' => function($q){$q->select('username','user_pid', 'gsm');}])
+                                ->with(['team'  => function($q){$q->select('team','pid');}])
+                                ->where('region_pid',getRegionPid())->get();
            return pushData($teams);
         } catch (\Throwable $e) {
             logError($e->getMessage());

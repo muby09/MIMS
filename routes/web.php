@@ -108,7 +108,7 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/add-meter-number', [MeterController::class, 'addMeterNumber']);//->name('assigned.meters');
         Route::get('/load-team-assigned-meters', [MeterController::class, 'loadTeamAssignedMeters']);//->name('assigned.meters');
         Route::inertia('/team-members', 'Region/TeamMember')->name('team.members');
-        Route::get('/load-teams', [TeamController::class, 'loadMembers']);//->name('team.members');
+        Route::get('/load-team-member', [TeamController::class, 'loadMembers']);//->name('team.members');
         
     });
     // data staff

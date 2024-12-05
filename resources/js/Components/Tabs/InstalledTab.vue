@@ -55,7 +55,7 @@
                             <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Address</th>
                             <!--<th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">33Kv feeder</th> -->
                             <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">11kv Feeder</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">DT Name</th>
+                           <!--- <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">DT Name</th> -->
                             <!--<th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Band</th> -->
                             <!--<th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Expected Load (In Amps)</th> -->
                             <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Meter Type</th>
@@ -80,7 +80,7 @@
                             <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.address }}</td>
                             <!--<td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.feeder_33 }}</td> -->
                             <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.feeder11kv?.name }}</td>
-                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.dt_name }}</td>
+                           <!-- <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.dt_name }}</td> -->
                             <!--<td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.band }}</td>-->
                             <!--<td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.load }}</td>-->
                             <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.meter_type }}</td>
