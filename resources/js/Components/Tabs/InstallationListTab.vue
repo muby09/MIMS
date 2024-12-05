@@ -353,15 +353,15 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-2"> 
                             <div class="flex flex-col ">
-                                        <InputLabel for="dt_code" value="DT Number" />
+                                        <InputLabel for="dt_name" value="DT Number" />
                                             <TextInput
-                                                id="dt_code"
-                                                type="number"
+                                                id="dt_name"
+                                                type="text"
                                                 class="mt-1 block w-full"
-                                                v-model="meterForm.dt_code"
+                                                v-model="meterForm.dt_name"
                                                 placeholder="e.g 04"
                                             />
-                                            <InputError class="mt-2" :message="meterForm?.errors?.dt_code" />
+                                            <InputError class="mt-2" :message="meterForm?.errors?.dt_name" />
                                     </div>
                                      <div class="flex flex-col ">
                                         <InputLabel for="upriser" value="Upriser" />
