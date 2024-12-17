@@ -109,7 +109,7 @@ class MeterController extends Controller
         try {
 
 
-            $data = Installation::where('region_pid', getRegionPid())->with('origin')->with('feeder11kv')->with('feeder33kv')->latest()->paginate(2);
+            $data = Installation::where('region_pid', getRegionPid())->with('origin')->with('feeder11kv')->with('feeder33kv')->latest()->paginate(100);
             return pushData($data);
         } catch (\Throwable $e) {
             logError($e->getMessage());
