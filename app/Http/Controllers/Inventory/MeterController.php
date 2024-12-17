@@ -109,7 +109,7 @@ class MeterController extends Controller
         try {
 
 
-            $data = Installation::where('region_pid', getRegionPid())->with('origin')->with('feeder11kv')->with('feeder33kv')->latest()->limit(100)->get();
+            $data = Installation::where('region_pid', getRegionPid())->with('origin')->with('feeder11kv')->with('feeder33kv')->latest()->paginate(2);
             return pushData($data);
         } catch (\Throwable $e) {
             logError($e->getMessage());
@@ -246,7 +246,7 @@ class MeterController extends Controller
     }
 
 
-    public function RecordForm(Request $request)
+    public function recordForm(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'meter_number' => ['required','exists:meter_lists',Rule::unique('installations')->where(function($q) use($request){
@@ -336,7 +336,7 @@ class MeterController extends Controller
                     'seal' => $request->seal,
                     'dt_code' => $request->dt_code,
                     'creator' => getUserPid() ,
-                    'region_pid' => getRegionPid()
+                    'region_pid' => $request->region_pid ?? getRegionPid()
                 ];
                 DB::beginTransaction();
                 MeterList::where('meter_number', $request->meter_number)->update(['status' => 3]);

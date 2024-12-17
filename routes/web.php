@@ -114,7 +114,7 @@ Route::middleware(['auth'])->group(function(){
     // data staff
     Route::middleware(['role:data entry|super admin|region admin'])->group(function () {
         Route::inertia('/installations', 'Region/Installations')->name('installations');
-        Route::post('/record-form', [MeterController::class, 'RecordForm'])->name('record.form');
+        Route::post('/record-form', [MeterController::class, 'recordForm'])->name('record.form');
         Route::get('/schedule-list' , [DependencyController::class, 'scheduleList'])->name('schedule.list');
         Route::get('/search-schedule-list/{query}', [DependencyController::class, 'searchScheduleList']);//->name('schedule.list');
         Route::get('/installed-list', [MeterController::class, 'installedList']);//->name('schedule.list');

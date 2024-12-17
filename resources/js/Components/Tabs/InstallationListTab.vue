@@ -50,11 +50,7 @@
         {"id": "COMMERCIAL", "text": "COMMERCIAL"},
         {"id": "SPECIAL", "text": "SPECIAL"},
     ]
-    const religion = [
-        {"id":  "Islam", "text": "Islam"},
-        {"id": "Christainity", "text": "Christainity"},
-        {"id": "Other", "text": "Other"},
-    ]
+  
     
     const meterForm = ref({
         'meter_number' :'', 
@@ -248,10 +244,7 @@
         
         <Modal :show="showModal" @close="closeModal" max-width="6xl" title="Record Data" @submit="recordForm">
            <form action="" >
-                
                     <div class="py-4 px-4">
-
-
                             <div class="grid gap-4  text-sm grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 ">
                                 <div class="flex flex-col ">
                                     <InputLabel for="first_name" value="Meter Number" />
@@ -351,7 +344,7 @@
 
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-2"> 
+                        <div class="grid grid-cols-1 md:grid-cols-5 gap-2"> 
                             <div class="flex flex-col ">
                                         <InputLabel for="dt_name" value="DT Name" />
                                             <TextInput
@@ -484,11 +477,9 @@
                                 </div>
                         </div>
 
+                        <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4">
 
-                        <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
-                            
-                             
-                             <div class="flex  flex-col">
+                            <div class="flex  flex-col">
                                 <InputLabel for="feeder_33kv" value="Customer Phase" />
                                     <div class="flex ">
                                         <div class="flex items-center ml-2">
@@ -531,19 +522,14 @@
                                         />
                                         <InputError class="mt-2" :message="meterForm?.errors?.seal" />       
                                 </div>
+                        </div>
 
-                                 <div class="flex flex-col ">
-                                        <InputLabel for="pole" value="Pole Number" />
-                                        <TextInput
-                                            id="pole"
-                                            type="number"
-                                            class="mt-1 block w-full"
-                                            v-model="meterForm.pole"
-                                            placeholder="e.g 11 "
-                                            
-                                        />
-                                        <InputError class="mt-2" :message="meterForm?.errors?.pole" />       
-                                </div>
+
+                        <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
+                            
+                                
+
+                                
 
                                  <!--<div class="flex flex-col ">
                                         <InputLabel for="pole" value="Estimated Load" />
@@ -565,11 +551,25 @@
                                             type="text"
                                             class="mt-1 block w-full"
                                             v-model="meterForm.service_center"
-                                            placeholder="Customer Estimated Load"
+                                            placeholder="Service Center"
                                             
                                         />
-                                        <InputError class="mt-2" :message="meterForm?.errors?.estimated" />       
+                                        <InputError class="mt-2" :message="meterForm?.errors?.service_center" />       
                                 </div>
+
+                                <div class="flex flex-col ">
+                                        <InputLabel for="unit" value="Business Unit" />
+                                        <TextInput
+                                            id="unit"
+                                            type="text"
+                                            class="mt-1 block w-full"
+                                            v-model="meterForm.business_unit"
+                                            placeholder="Business Unit"
+                                            
+                                        />
+                                        <InputError class="mt-2" :message="meterForm?.errors?.business_unit" />       
+                                </div>
+
                                  <div class="flex flex-col ">
                                         <InputLabel for="account" value="Account Number" />
                                         <TextInput
@@ -583,17 +583,20 @@
                                         <InputError class="mt-2" :message="meterForm?.errors?.account_no" />       
                                 </div>
 
-                                 <div class="flex flex-col ">
-                                        <InputLabel for="unit" value="Business Unit" />
+                        </div>
+
+                        <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4">
+                            <div class="flex flex-col ">
+                                        <InputLabel for="pole" value="Pole Number" />
                                         <TextInput
-                                            id="unit"
-                                            type="text"
+                                            id="pole"
+                                            type="number"
                                             class="mt-1 block w-full"
-                                            v-model="meterForm.business_unit"
-                                            placeholder="Business Unit"
+                                            v-model="meterForm.pole"
+                                            placeholder="e.g 11 "
                                             
                                         />
-                                        <InputError class="mt-2" :message="meterForm?.errors?.business_unit" />       
+                                        <InputError class="mt-2" :message="meterForm?.errors?.pole" />       
                                 </div>
 
                                 <div class="flex flex-col ">
@@ -601,7 +604,6 @@
                                          :options="installers"/>
                                         <InputError class="mt-2" :message="meterForm?.errors?.installer" />       
                                 </div>
-
 
                                  <div class="flex flex-col ">
                                         <InputLabel for="latitude" value="Latitude" />
@@ -628,7 +630,6 @@
                                         <InputError class="mt-2" :message="meterForm?.errors?.y_cordinate" />       
                                 </div>
 
-                                
 
                         </div>
 
