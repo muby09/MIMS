@@ -130,7 +130,7 @@ class MeterController extends Controller
                     ->orWhere('meter_number', 'like', '%' . $query . '%')
                     ->orWhere('fullname', 'like', '%' . $query . '%')
                     ->orWhere('gsm', 'like', '%' . $query . '%');
-                })->with('origin')->with('feeder11kv')->with('feeder33kv')->latest()->limit(100)->get();
+                })->with('origin')->with('feeder11kv')->with('feeder33kv')->latest()->limit(100)->paginate(10);
               
             return pushData($data);
         } catch (\Throwable $e) {
