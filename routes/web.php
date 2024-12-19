@@ -121,6 +121,7 @@ Route::middleware(['auth'])->group(function(){
 
         Route::get('/search-installed-list/{query}', [MeterController::class, 'searchInstalledList']);//->name('schedule.list');
         Route::post('/filter-installed-list', [MeterController::class, 'filterInstalledList']);//->name('schedule.list');
+        Route::post('/export-installed-list', [MeterController::class, 'exportInstalledList']);//->name('schedule.list');
         Route::inertia('/customer-complains', 'Region/Complains')->name('complains');
         Route::post('/add-customer-complain', [MeterController::class, 'addCustomerComplain']);//->name('complains');
         Route::get('/complain-list', [MeterController::class, 'complainList']);//->name('complains');

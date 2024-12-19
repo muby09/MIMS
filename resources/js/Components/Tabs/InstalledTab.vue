@@ -52,6 +52,15 @@
             console.log(e);
         })
     }
+     const exportRecord = () => {
+        store.dispatch('postMethod', { url:'export-installed-list',param: filterForm.value }).then((data) => {
+        if (data?.status == 200) {
+            exportToExcel(data.data)
+        }
+        }).catch(e => {
+            console.log(e);
+        })
+    }
 
 
     const changePage = (link) => {
@@ -731,14 +740,15 @@
                                                 placeholder="e.g 15"
                                                
                                             />
-                                            <button class="btn  px-4 py-1 p-1 oy-1 text-sm bg-optimal text-white me-2 " @click="filterRecord">Go</button>
+                                            <button class="btn  px-2 py-1 p-1 oy-1 text-sm bg-optimal text-white me-2 " @click="filterRecord">Filter</button>
+                                            <button class="btn  px-2 py-1 p-1 oy-1 text-sm bg-optimal text-white me-2 " @click="exportRecord">Export</button>
                                             </div>
                                             <InputError class="mt-2" :message="filterForm?.errors?.to" />
                                     </div>
                                     <div></div>
                                 </div>
         <div class="overflow-x-auto  rounded-lg shadow">
-                <!-- <div>
+                <div>
                     <TextInput
                                             id="longitude"
                                             type="text"
@@ -747,7 +757,7 @@
                                             placeholder="enter account number or name"
                                             
                                         />
-                </div> -->
+                </div>
                 <table class="min-w-full">
                     <thead class="bg-gray-50 border-b-2 border-gray-200">
                         <tr>

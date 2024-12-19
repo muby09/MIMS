@@ -138,11 +138,24 @@ class MeterController extends Controller
             return pushData([], STS_500);
         }
     }
+    
     public function filterInstalledList(Request $request)
     {
         try {
             $data = Installation::where('region_pid', getRegionPid())
-                ->whereBetween('doi', [$request->from, $request->to])->with('origin')->with('feeder11kv')->with('feeder33kv')->with('team')->with('region')->latest()->limit(20)->paginate(100);
+                ->whereBetween('doi', [$request->from, $request->to])->with('origin')->with('feeder11kv')->with('feeder33kv')->with('team')->with('region')->latest()->paginate(100);
+            return pushData($data);
+        } catch (\Throwable $e) {
+            logError($e->getMessage());
+            return pushData([], STS_500);
+        }
+    }
+
+    public function exportInstalledList(Request $request)
+    {
+        try {
+            $data = Installation::where('region_pid', getRegionPid())
+                ->whereBetween('doi', [$request->from, $request->to])->with('origin')->with('feeder11kv')->with('feeder33kv')->with('team')->with('region')->latest()->get();
             return pushData($data);
         } catch (\Throwable $e) {
             logError($e->getMessage());
