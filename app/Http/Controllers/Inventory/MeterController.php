@@ -109,7 +109,7 @@ class MeterController extends Controller
         try {
 
 
-            $data = Installation::where('region_pid', getRegionPid())->with('origin')->with('feeder11kv')->with('feeder33kv')->latest()->paginate(100);
+            $data = Installation::where('region_pid', getRegionPid())->with('origin')->with('feeder11kv')->with('feeder33kv')->with('team')->with('region')->latest()->paginate(100);
             return pushData($data);
         } catch (\Throwable $e) {
             logError($e->getMessage());
@@ -130,8 +130,19 @@ class MeterController extends Controller
                     ->orWhere('meter_number', 'like', '%' . $query . '%')
                     ->orWhere('fullname', 'like', '%' . $query . '%')
                     ->orWhere('gsm', 'like', '%' . $query . '%');
-                })->with('origin')->with('feeder11kv')->with('feeder33kv')->latest()->limit(100)->paginate(10);
+                })->with('origin')->with('feeder11kv')->with('feeder33kv')->with('team')->with('region')->latest()->limit(20)->paginate(10);
               
+            return pushData($data);
+        } catch (\Throwable $e) {
+            logError($e->getMessage());
+            return pushData([], STS_500);
+        }
+    }
+    public function filterInstalledList(Request $request)
+    {
+        try {
+            $data = Installation::where('region_pid', getRegionPid())
+                ->whereBetween('doi', [$request->from, $request->to])->with('origin')->with('feeder11kv')->with('feeder33kv')->with('team')->with('region')->latest()->limit(20)->paginate(100);
             return pushData($data);
         } catch (\Throwable $e) {
             logError($e->getMessage());

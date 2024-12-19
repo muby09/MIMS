@@ -2,14 +2,15 @@
     import store from '@/store';
     import { ref } from 'vue';
     import TextInput from '@/Components/TextInput.vue';
- import Modal from '@/Components/Modal.vue';
+    import Modal from '@/Components/Modal.vue';
     import InputError from '@/Components/InputError.vue';
     import InputLabel from '@/Components/InputLabel.vue';
-    // import TextInput from '@/Components/TextInput.vue';
     import BaseSelect from '@/Components/BaseSelect.vue';
+    import PaginationLinks from '@/Components/PaginationLinks.vue';
+    import * as XLSX from 'xlsx';
+    import { saveAs } from 'file-saver';
     import { formatError } from "@/composables/formatError";
     const { transformValidationErrors } = formatError()
-    import PaginationLinks from '@/Components/PaginationLinks.vue';
 
 
     const schedules = ref({})
@@ -27,6 +28,23 @@
      const handleKeyup = (event) => {
         
         store.dispatch('getMethod', { url:'search-installed-list/'+event.target.value }).then((data) => {
+        if (data?.status == 200) {
+            schedules.value = data.data;
+        }
+        }).catch(e => {
+            console.log(e);
+        })
+    }
+
+    const filterForm = ref({
+        'from' : '' ,
+        'to' : '' ,
+        errors:{}
+    })
+
+    
+     const filterRecord = () => {
+        store.dispatch('postMethod', { url:'filter-installed-list',param: filterForm.value }).then((data) => {
         if (data?.status == 200) {
             schedules.value = data.data;
         }
@@ -58,6 +76,7 @@
         {"id":  "A1", "text": "A1"},
         {"id":  "A2", "text": "A2"},
     ]
+
     const premises = [
         {"id":  "RESIDENTIAL", "text": "RESIDENTIAL"},
         {"id": "COMMERCIAL", "text": "COMMERCIAL"},
@@ -111,7 +130,7 @@
 
 
 
-     const editForm = (data) => {
+     const editRecord = (data) => {
         showModal.value = true;
         meterForm.value.meter_number = data.meter_number
         meterForm.value.fullname = data.fullname
@@ -175,7 +194,7 @@
     }
 
     load33kvFeeder
-     const feeder33s = ref({})
+    const feeder33s = ref({})
     function load33kvFeeder(id) {
         store.dispatch('loadDropdown', 'feeder-33/'+id).then(({ data }) => {
             feeder33s.value = data;
@@ -183,7 +202,8 @@
             console.log(e);
         })
     }
-     const feeder11s = ref({})
+
+    const feeder11s = ref({})
     function load11kvFeeder(id) {
         store.dispatch('loadDropdown', 'feeder-11/'+id).then(({ data }) => {
             feeder11s.value = data;
@@ -211,6 +231,7 @@
             console.log(e);
         })
     }
+
     loadInstallers()
     const installers = ref({})
     function loadInstallers() {
@@ -236,6 +257,30 @@
         })
     }
 
+
+    // export data to excel 
+    function exportToExcel(data) {
+        
+        var dataArray = []
+        var count = 0
+        data.forEach((el) => {
+            dataArray.push({
+                    'S/N': ++count,'Customer Name': el?.fullname, 'Address': el.address, 'Phone No': el?.gsm, 'Account No.': el?.account_no,
+                    'Meter No.': el?.meter_number,'Seal No.': el?.seal,'33KV Feeder': el?.feeder33kv?.name,'11kv Feeder Name': el?.feeder11kv?.name, 'DT Name': el?.dt_name, 
+                    'Service Band': '', 'Region': el?.region?.region, 'GPS LATITUDE': el?.x_cordinate, 'GPS LONGTITUDE': el?.y_cordinate, 'Type of Meter': el?.meter_type,
+                    'Meter Status': el?.status || 'New', 'Date of Installation': el?.doi, 'Name of MAP': 'Triple Seventh Ltd', 'Remarks': el.remark,  
+                })
+            })
+
+        const today = new Date();
+        const filename = data[0].region?.region  + ' Region Report, '  + today.toISOString().split('T')[0] + '.xlsx';
+        const worksheet = XLSX.utils.json_to_sheet(dataArray);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+        saveAs(blob, filename);
+    }
 
 
 </script>
@@ -655,6 +700,42 @@
 
            </form>
         </Modal>
+
+        
+        
+                                <div class="grid grid-cols-1  md:grid-cols-3 gap-2">
+                                    <div class="flex justifyend">
+                                        <div class="">
+                                            <button  class=" bg-optimal text-white px-4 py-2 rounded mr-2" @click="exportToExcel(schedules.data)">Export</button>
+                                        </div>
+                                    </div>
+                                     <div class="flex flex-col ">
+                                        <InputLabel for="from" value="Date" />
+                                            <TextInput
+                                                id="from"
+                                                type="date"
+                                                class="mt-1 block w-full"
+                                                v-model="filterForm.from"
+                                               
+                                            />
+                                            <InputError class="mt-2" :message="filterForm?.errors?.from" />
+                                    </div>
+                                    <div class="flex flex-col ">
+                                        <InputLabel for="to" value="To" />
+                                            <div class="flex row">
+                                                <TextInput
+                                                id="to"
+                                                type="date"
+                                                class="mt-1 block w-full"
+                                                v-model="filterForm.to"
+                                                placeholder="e.g 15"
+                                               
+                                            />
+                                            <button class="btn  px-4 py-1 p-1 oy-1 text-sm bg-optimal text-white me-2 " @click="filterRecord">Go</button>
+                                            </div>
+                                            <InputError class="mt-2" :message="filterForm?.errors?.to" />
+                                    </div>
+                                </div>
         <div class="overflow-auto  rounded-lg shadow">
                 <div>
                     <TextInput
@@ -716,7 +797,7 @@
                                 {{ item.date }}
                             </td>
                             <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered" >
-                                <button class="p-1 oy-1 text-sm bg-optimal text-white me-2 inline-block rounded" @click="editForm(item)">Edit</button>
+                                <button class="p-1 oy-1 text-sm bg-optimal text-white me-2 inline-block rounded" @click="editRecord(item)">Edit</button>
                             </td>
                           
                         </tr>

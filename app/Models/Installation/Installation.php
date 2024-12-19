@@ -5,6 +5,7 @@ namespace App\Models\Installation;
 use App\Models\State;
 use App\Models\Admin\Feeder\Feeder11;
 use App\Models\Admin\Feeder\Feeder33;
+use App\Models\Region\Region;
 use App\Models\Region\Team;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -44,6 +45,10 @@ class Installation extends Model
     public function origin()
     {
         return $this->belongsTo(State::class, 'state', 'id');
+    }
+    public function region()
+    {
+        return $this->belongsTo(Region::class, 'region_pid', 'pid');
     }
 
 
