@@ -738,7 +738,7 @@
                                     <div></div>
                                 </div>
         <div class="overflow-x-auto  rounded-lg shadow">
-                <div>
+                <!-- <div>
                     <TextInput
                                             id="longitude"
                                             type="text"
@@ -747,7 +747,7 @@
                                             placeholder="enter account number or name"
                                             
                                         />
-                </div>
+                </div> -->
                 <table class="min-w-full">
                     <thead class="bg-gray-50 border-b-2 border-gray-200">
                         <tr>
