@@ -737,7 +737,7 @@
                                     </div>
                                     <div></div>
                                 </div>
-        <div class="overflowauto  rounded-lg shadow">
+        <div class="overflow-x-auto  rounded-lg shadow">
                 <div>
                     <TextInput
                                             id="longitude"
