@@ -703,7 +703,7 @@
 
         
         
-                                <div class="grid grid-cols-1  md:grid-cols-3 gap-2">
+                                <div class="grid grid-cols-1  md:grid-cols-4 gap-2">
                                     <div class="flex justifyend">
                                         <div class="">
                                             <button  class=" bg-optimal text-white px-4 py-2 rounded mr-2" @click="exportToExcel(schedules.data)">Export</button>
@@ -735,6 +735,7 @@
                                             </div>
                                             <InputError class="mt-2" :message="filterForm?.errors?.to" />
                                     </div>
+                                    <div></div>
                                 </div>
         <div class="overflow-auto  rounded-lg shadow">
                 <div>
