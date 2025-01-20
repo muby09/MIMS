@@ -269,7 +269,7 @@
 
     // export data to excel 
     function exportToExcel(data) {
-        return 
+      
         var dataArray = []
         var count = 0
         data.forEach((el) => {
