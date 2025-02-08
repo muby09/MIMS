@@ -33,7 +33,7 @@ class MeterController extends Controller
                         ->select(DB::raw('m.status,doi,COUNT(i.id) as count'))
                         ->groupBy('i.doi')
                         ->groupBy('m.status')->where('i.region_pid',getRegionPid())
-                        // ->whereMonth('i.doi',date('m'))->whereYear('i.doi',date('Y'))
+                        ->whereMonth('i.doi',date('m'))->whereYear('i.doi',date('Y'))
                         ->get();
 
             $monthly = DB::table('installations')
