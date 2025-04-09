@@ -43,7 +43,7 @@ class DashboardController extends Controller
             // setRegionPid() ;
             return Region::select('*',DB::raw('(select count(i.id)  from installations i where i.region_pid = regions.pid ) as total'))->get();
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return [];
         }
     }

@@ -29,8 +29,9 @@ class FeederController extends Controller
                 $data = Feeder33::where('region_pid', getRegionPid())->with('zone')->get();
             }
             return pushData($data, '33 kv feeders loaded');
-        } catch (\Throwable $th) {
-            //throw $th;
+        } catch (\Throwable $e) {
+            logError($e);
+            return false;
         }
 
     }
@@ -44,8 +45,9 @@ class FeederController extends Controller
                 $data = Feeder11::where('region_pid', getRegionPid())->with('zone')->with('feeder')->get();
             }
             return pushData($data, '11 kv feeders loaded');
-        } catch (\Throwable $th) {
-            //throw $th;
+        } catch (\Throwable $e) {
+            logError($e);
+            return false;
         }
 
     }
@@ -76,7 +78,7 @@ class FeederController extends Controller
                 }
                 return pushResponse($result, "Feeder(s) Added");
             } catch (\Throwable $e) {
-                logError($e->getMessage());
+                logError($e);
                 return responseMessage(status: 204, data: [], msg: STS_500);
             }
         }
@@ -111,7 +113,7 @@ class FeederController extends Controller
                 }
                 return pushResponse($result, "Feeder(s) Added");
             } catch (\Throwable $e) {
-                logError($e->getMessage());
+                logError($e);
                 return responseMessage(status: 204, data: [], msg: STS_500);
             }
         }
@@ -123,7 +125,7 @@ class FeederController extends Controller
         try {
             return Feeder11::updateOrCreate(['pid' => $data['pid']], $data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return false;
         }
     }
@@ -131,7 +133,7 @@ class FeederController extends Controller
         try {
             return Feeder33::updateOrCreate(['pid' => $data['pid']], $data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return false;
         }
     }

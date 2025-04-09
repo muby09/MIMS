@@ -24,7 +24,7 @@ class DependencyController extends Controller
         try {
             return Inertia::render('SuperAdmin/Dependency');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
         }
     }
 
@@ -39,7 +39,7 @@ class DependencyController extends Controller
                 ->orWhere('phone_no', 'like', '%' . $query . '%')->limit(15)->get();
             return pushData($data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
         }
     }
 
@@ -52,7 +52,7 @@ class DependencyController extends Controller
             $data = Schedule::with('region')->where('region_pid',getRegionPid())->paginate(50);
             return Inertia::render('Region/Schedule', ['data' => $data]);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
         }
     }
 
@@ -62,7 +62,7 @@ class DependencyController extends Controller
             $data = Schedule::with('region')->where('region_pid',getRegionPid())->limit(50)->get();
            return pushData($data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
         }
     }
 
@@ -78,7 +78,7 @@ class DependencyController extends Controller
             Excel::import(new ImportScheduleList, $request->file('file'));
             return back()->with('message', 'File imported successfully!');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return back()->with('error', 'Failed to import file!');
         }
     }
@@ -91,7 +91,7 @@ class DependencyController extends Controller
             $data = TradingZone::with('state')->get();
             return pushData($data, 'Zones loaded');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return pushData([], STS_500);
         }
     }
@@ -103,7 +103,7 @@ class DependencyController extends Controller
             $data = MeterType::get();
             return pushData($data, 'Zones loaded');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return pushData([], STS_500);
         }
     }
@@ -115,7 +115,7 @@ class DependencyController extends Controller
             $data = MeterBrand::get();
             return pushData($data, 'Zones loaded');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return pushData([], STS_500);
         }
     }
@@ -139,7 +139,7 @@ class DependencyController extends Controller
                 $result = $this->addOrEditZone($data);
                 return pushResponse($result, $request->pid ? 'Trading Zone Updated' : 'Trading Zone Added');
             } catch (\Throwable $e) {
-                logError($e->getMessage());
+                logError($e);
                 return responseMessage(status: 204, data: [], msg: STS_500);
             }
         }
@@ -163,7 +163,7 @@ class DependencyController extends Controller
                 $result = $this->addOrEditBrand($data);
                 return pushResponse($result, $request->pid ? 'Meter Brand Updated' : 'Meter Brand Added');
             } catch (\Throwable $e) {
-                logError($e->getMessage());
+                logError($e);
                 return responseMessage(status: 204, data: [], msg: STS_500);
             }
         }
@@ -187,7 +187,7 @@ class DependencyController extends Controller
                 $result = $this->addOrEditType($data);
                 return pushResponse($result, $request->pid ? 'Meter Type Updated' : 'Meter Type Added');
             } catch (\Throwable $e) {
-                logError($e->getMessage());
+                logError($e);
                 return responseMessage(status: 204, data: [], msg: STS_500);
             }
         }
@@ -199,7 +199,7 @@ class DependencyController extends Controller
         try {
             return TradingZone::updateOrCreate(['pid' => $data['pid'] ], $data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return false;
         }
     }
@@ -208,7 +208,7 @@ class DependencyController extends Controller
         try {
             return MeterBrand::updateOrCreate(['id' => $data['id'] ], $data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return false;
         }
     }
@@ -217,7 +217,7 @@ class DependencyController extends Controller
         try {
             return MeterType::updateOrCreate(['id' => $data['id'] ], $data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return false;
         }
     }

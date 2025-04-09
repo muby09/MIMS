@@ -15,8 +15,9 @@ class RegionController extends Controller
         try {
             $data = Region::get();
             return pushData($data,'Regions loaded');
-        } catch (\Throwable $th) {
-            //throw $th;
+        } catch (\Throwable $e) {
+            logError($e);
+            return pushData([],'Empty Result');
         }
 
     }
@@ -38,7 +39,7 @@ class RegionController extends Controller
                 return pushResponse($result,$request->pid ? 'Region Updated' :'Region Added');
 
             } catch (\Throwable $e) {
-                logError($e->getMessage());
+                logError($e);
                 return responseMessage(status: 204, data: [], msg: STS_500);
             }
         }
@@ -50,7 +51,7 @@ class RegionController extends Controller
         try {
             return Region::updateOrCreate(['pid' => $data['pid']],$data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return false;
         }
     }

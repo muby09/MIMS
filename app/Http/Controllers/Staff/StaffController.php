@@ -19,7 +19,7 @@ class StaffController extends Controller
             $data = UserDetail::with('user')->with('user.roles')->with('origin')->with('lga')->where('region_pid',getRegionPid())->get();
             return pushData($data, 'Users loaded');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             
             return responseMessage(status: 204, data: [], msg: STS_500);
 
@@ -30,7 +30,7 @@ class StaffController extends Controller
             $data = UserDetail::with('user')->with('user.roles')->with('origin')->with('lga')->get();
             return pushData($data, 'Users loaded');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             
             return responseMessage(status: 204, data: [], msg: STS_500);
 
@@ -48,7 +48,7 @@ class StaffController extends Controller
             })->get();
             return pushData($data, 'Users loaded');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return responseMessage(status: 204, data: [], msg: STS_500);
         }
     }
@@ -136,7 +136,7 @@ class StaffController extends Controller
                 return pushResponse($result, "Staff Account Added");
 
             } catch (\Throwable $e) {
-                logError($e->getMessage());
+                logError($e);
                 DB::rollBack();
                 return responseMessage(status: 204, data: [], msg: STS_500);
             }
@@ -162,7 +162,7 @@ class StaffController extends Controller
                 return pushResponse($result, "Password Updated");
 
             } catch (\Throwable $e) {
-                logError($e->getMessage());
+                logError($e);
                 return responseMessage(status: 204, data: [], msg: STS_500);
 
             }

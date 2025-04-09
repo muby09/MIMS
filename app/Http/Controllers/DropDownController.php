@@ -18,7 +18,7 @@ class DropDownController extends Controller
                 ->get(['pid as id', 'name as text']); //
             return responseMessage(status: 200, data: $result, msg: 'data loaded');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return response()->json([]);
         }
     }
@@ -30,7 +30,7 @@ class DropDownController extends Controller
                 ->select('item_pid as id',DB::raw("CONCAT(name, ' | ', quantity,' ',unit) AS text"))->get(); //
             return responseMessage(status: 200, data: $result, msg: 'data loaded');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return response()->json([]);
         }
     }
@@ -42,7 +42,7 @@ class DropDownController extends Controller
                 ->get(['state as id', 'state as text']); //
             return responseMessage(status: 200, data: $result, msg: 'data loaded');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return response()->json([]);
         }
     }
@@ -54,7 +54,7 @@ class DropDownController extends Controller
                 ->get(['pid as id', 'region as text']); //
             return responseMessage(status: 200, data: $result, msg: 'data loaded');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return response()->json([]);
         }
     }
@@ -67,7 +67,7 @@ class DropDownController extends Controller
                 ->get(['pid as id', 'region as text']); //
             return responseMessage(status: 200, data: $result, msg: 'data loaded');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return response()->json([]);
         }
     }
@@ -80,7 +80,7 @@ class DropDownController extends Controller
                 ->get(['pid as id', 'name as text']); //
             return responseMessage(status: 200, data: $result, msg: 'data loaded');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return response()->json([]);
         }
     }
@@ -93,7 +93,7 @@ class DropDownController extends Controller
                 ->get(['pid as id', 'name as text']); //
             return responseMessage(status: 200, data: $result, msg: 'data loaded');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return response()->json([]);
         }
     }
@@ -108,7 +108,7 @@ class DropDownController extends Controller
 
             return response()->json($data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return response()->json([]);
         }
     }
@@ -121,7 +121,7 @@ class DropDownController extends Controller
 
             return response()->json($data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return response()->json([]);
         }
     }
@@ -135,7 +135,7 @@ class DropDownController extends Controller
 
             return response()->json($data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return response()->json([]);
         }
     }
@@ -148,7 +148,7 @@ class DropDownController extends Controller
 
             return response()->json($data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return response()->json([]);
         }
     }
@@ -161,7 +161,7 @@ class DropDownController extends Controller
             return responseMessage(status: 200, data: $data, msg: 'data loaded');
 
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return response()->json([]);
         }
     }
@@ -185,7 +185,7 @@ class DropDownController extends Controller
             return responseMessage(status: 200, data: $data, msg: 'data loaded');
 
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return response()->json([]);
         }
     }
@@ -209,7 +209,7 @@ class DropDownController extends Controller
             return responseMessage(status: 200, data: $data, msg: 'data loaded');
 
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return response()->json([]);
         }
     }
@@ -223,7 +223,7 @@ class DropDownController extends Controller
                 ->get(['s.id', 's.state as text']); //
             return responseMessage(status: 200, data: $result, msg: 'data loaded');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return response()->json([]);
         }
     }
@@ -236,7 +236,7 @@ class DropDownController extends Controller
                 ->get(['pid as id', 'zone as text']); //
             return responseMessage(status: 200, data: $result, msg: 'data loaded');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return response()->json([]);
         }
     }
@@ -248,7 +248,7 @@ class DropDownController extends Controller
                 ->get(['type as id', 'type as text']); //
             return responseMessage(status: 200, data: $result, msg: 'data loaded');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return response()->json([]);
         }
     }
@@ -260,7 +260,7 @@ class DropDownController extends Controller
                 ->get(['brand as id', 'brand as text']); //
             return responseMessage(status: 200, data: $result, msg: 'data loaded');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return response()->json([]);
         }
     }

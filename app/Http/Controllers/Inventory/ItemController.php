@@ -40,7 +40,7 @@ class ItemController extends Controller
             }
             return Inertia::render('Inventory/InventoryList', ['lists' => $lists]);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return pushData([], ERR_EMT);
         }
     }
@@ -57,7 +57,7 @@ class ItemController extends Controller
             // $lists = DamagedItem::with('item')->with('region')->paginate(20);
             return Inertia::render('Inventory/DamagedItem', ['lists' => $lists]);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return pushData([], ERR_EMT);
         }
     }
@@ -72,7 +72,7 @@ class ItemController extends Controller
             }
             return pushData($lists,'Data loaded');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return pushData([], ERR_EMT);
         }
     }
@@ -101,7 +101,7 @@ class ItemController extends Controller
                 $result = $this->addOrEditItemName($data);
                 return pushResponse($result, $request->pid ? 'Item name updated' :"Item name added");
             } catch (\Throwable $e) {
-                logError($e->getMessage());
+                logError($e);
                 return responseMessage(status: 204, data: [], msg: STS_500);
             }
         }
@@ -136,7 +136,7 @@ class ItemController extends Controller
                 }
                 return pushResponse($result,"Item name added");
             } catch (\Throwable $e) {
-                logError($e->getMessage());
+                logError($e);
                 return responseMessage(status: 204, data: [], msg: STS_500);
             }
         }
@@ -192,7 +192,7 @@ class ItemController extends Controller
                 }
                 return pushResponse($result, "Item moved to Damaged.");
             } catch (\Throwable $e) {
-                logError($e->getMessage());
+                logError($e);
                 DB::rollBack();
                 return responseMessage(status: 204, data: [], msg: STS_500);
             }
@@ -205,7 +205,7 @@ class ItemController extends Controller
         try {
             return Item::updateOrCreate(['pid' => $data['pid']],$data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return false;
         }
     }
@@ -222,7 +222,7 @@ class ItemController extends Controller
             }
             return ItemQuantity::create($data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return false;
         }
     }
@@ -243,7 +243,7 @@ class ItemController extends Controller
                 return $result;
             }
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return false;
         }
     }

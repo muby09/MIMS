@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
                 setRegionPid($region->region_pid);
                 setRegionName($region->region);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return false;
         }
     }
@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\DB;
                 setRegionPid($pid);
                 setRegionName($region);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return false;
         }
     }
@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\DB;
         try {
             return DB::table('team_members as m')->join('teams as t','t.pid', 'm.team_pid')->where('m.region_pid',getRegionPid())->where('m.user_pid', $pid)->first(['m.team_pid', 't.supervisor']);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return false;
         }
     }
@@ -41,7 +41,7 @@ use Illuminate\Support\Facades\DB;
         try {
             return DB::table('users')->where('pid', $pid)->pluck('email')->first();
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return false;
         }
     }
@@ -54,7 +54,7 @@ use Illuminate\Support\Facades\DB;
             }
             return $team;
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return false;
         }
     }

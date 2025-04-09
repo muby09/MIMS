@@ -20,7 +20,7 @@ class RequestController extends Controller
                                     ->where(['region_pid' => getRegionPid() , 'requested_by'  => getUserPid()])->get();
             return pushData($data, 'request loaded');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
 
             return responseMessage(status: 204, data: [], msg: STS_500);
         }
@@ -33,7 +33,7 @@ class RequestController extends Controller
             ->where('region_pid', getRegionPid())->get();
             return pushData($data, 'request loaded');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
 
             return responseMessage(status: 204, data: [], msg: STS_500);
         }
@@ -91,7 +91,7 @@ class RequestController extends Controller
                 return pushResponse($result, '');
 
             } catch (\Throwable $e) {
-                logError($e->getMessage());
+                logError($e);
                 DB::rollBack();
                 return responseMessage(msg: STS_500, status: 204);
             }
@@ -132,7 +132,7 @@ class RequestController extends Controller
                 return pushResponse($result, '');
                 
             } catch (\Throwable $e) {
-                logError($e->getMessage());
+                logError($e);
                 DB::rollBack();
                 return responseMessage(msg: STS_500, status: 204);
             }
@@ -146,7 +146,7 @@ class RequestController extends Controller
         try {
             return RequestDetail::updateOrCreate(['pid' => $data['pid']] , $data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return false;
         }
     }

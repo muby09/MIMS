@@ -16,10 +16,10 @@ class TeamController extends Controller
     public function loadTeams(){
         try {
             $teams = Team::with('supervisor')->where('region_pid',getRegionPid())->get();
-            logError($teams);
+            // logVar($teams);
            return pushData($teams);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return pushData([],STS_500);
         }
     }
@@ -31,7 +31,7 @@ class TeamController extends Controller
                                 ->where('region_pid',getRegionPid())->get();
            return pushData($teams);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return pushData([],STS_500);
         }
     }
@@ -43,7 +43,7 @@ class TeamController extends Controller
                                         ->where(['m.region_pid' => getRegionPid() , 't.supervisor' => getUserPid()])->get();
            return pushData($teams);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return pushData([],STS_500);
         }
     }
@@ -74,7 +74,7 @@ class TeamController extends Controller
                 }
                 return pushResponse($result, $request->pid ? 'Team Updated' : 'Team Created');
             } catch (\Throwable $e) {
-                logError($e->getMessage());
+                logError($e);
                 return responseMessage(status: 204, data: [], msg: STS_500);
             }
        }
@@ -98,7 +98,7 @@ class TeamController extends Controller
                 $result = $this->addMember($data);
                 return pushResponse($result,  'Member Added to Team');
             } catch (\Throwable $e) {
-                logError($e->getMessage());
+                logError($e);
                 return responseMessage(status: 204, data: [], msg: STS_500);
             }
        }
@@ -111,7 +111,7 @@ class TeamController extends Controller
         try {
             return Team::updateOrCreate(['pid' => $data['pid']],$data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return false;
         }
     }
@@ -121,7 +121,7 @@ class TeamController extends Controller
         try {
             return TeamMember::updateOrCreate(['team_pid' => $data['team_pid'] ,'region_pid' => $data['region_pid'] ,'user_pid' => $data['user_pid']],$data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return false;
         }
     }

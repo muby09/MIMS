@@ -23,7 +23,7 @@ class MeterController extends Controller
             $data = DB::table('meter_lists')->select(DB::raw('status,COUNT(id) as count'))->groupBy('status')->where('region_pid',getRegionPid())->get();
             return pushData($data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return pushData([],ERR_EMT);
         }
     }
@@ -47,7 +47,7 @@ class MeterController extends Controller
             $data = ['daily' => $daily , 'monthly' => $monthly];
             return responseMessage(status: 200, data: $data, msg: '');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return pushData([],ERR_EMT);
         }
     }
@@ -59,7 +59,7 @@ class MeterController extends Controller
             return pushData($data);
             return Inertia::render('Inventory/MeterList',['data' => $data]);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return pushData([],ERR_EMT);
         }
     }
@@ -69,7 +69,7 @@ class MeterController extends Controller
             return pushData($data);
             return Inertia::render('Inventory/MeterList',['data' => $data]);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return pushData([],ERR_EMT);
         }
     }
@@ -81,7 +81,7 @@ class MeterController extends Controller
             $data = Complain::with('meter')->latest()->limit(100)->paginate(20);
             return pushData($data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return pushData([],ERR_EMT);
         }
     }
@@ -98,7 +98,7 @@ class MeterController extends Controller
                 })->select('c.*')->with('meter')->limit(10)->paginate(10);
             return pushData($data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return pushData([],ERR_EMT);
         }
     }
@@ -112,7 +112,7 @@ class MeterController extends Controller
             $data = Installation::where('region_pid', getRegionPid())->with('origin')->with('feeder11kv')->with('feeder33kv')->with('team')->with('region')->latest()->paginate(100);
             return pushData($data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return pushData([], STS_500);
         }
     }
@@ -134,7 +134,7 @@ class MeterController extends Controller
               
             return pushData($data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return pushData([], STS_500);
         }
     }
@@ -146,7 +146,7 @@ class MeterController extends Controller
                 ->whereBetween('doi', [$request->from, $request->to])->with('origin')->with('feeder11kv')->with('feeder33kv')->with('team')->with('region')->latest()->paginate(100);
             return pushData($data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return pushData([], STS_500);
         }
     }
@@ -158,7 +158,7 @@ class MeterController extends Controller
                 ->whereBetween('doi', [$request->from, $request->to])->with('origin')->with('feeder11kv')->with('feeder33kv')->with('team')->with('region')->latest()->get();
             return pushData($data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return pushData([], STS_500);
         }
     }
@@ -166,7 +166,6 @@ class MeterController extends Controller
 
     public function addCustomerComplain(Request $request)
     {
-        try {
 
             $validator = Validator::make($request->all(), [
                 'old_meter_number' => ['nullable', 'exists:meter_lists', Rule::unique('installations')->where(function ($q) use ($request) {
@@ -205,17 +204,17 @@ class MeterController extends Controller
                     DB::rollBack();
                     return pushResponse($result, $request->pid ? 'Record updated' : "Form recorded");
                 } catch (\Throwable $e) {
-                    logError($e->getMessage());
+                    logError($e);
                     DB::rollBack();
                     return responseMessage(status: 204, data: [], msg: STS_500);
                 }
             }
             return responseMessage(data: $validator->errors()->toArray(), status: 422, msg: STS_422);
             
-        } catch (\Throwable $e) {
-            logError($e->getMessage());
-            return pushData([], STS_500);
-        }
+        // } catch (\Throwable $e) {
+        //     logError($e);
+        //     return pushData([], STS_500);
+        // }
     }
 
 
@@ -228,7 +227,7 @@ class MeterController extends Controller
             Excel::import(new ImportMeterList,$request->file('file'));
             return back()->with('message', 'File imported successfully!');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return back()->with('error', 'Failed to import file!');
         }
     }
@@ -251,7 +250,7 @@ class MeterController extends Controller
             $result = TeamAssignedMeter::create($data);
             return pushResponse($result,'Meter Registred!!');
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return responseMessage(status: 204, data: [], msg: STS_500);
         }
     }
@@ -264,7 +263,7 @@ class MeterController extends Controller
                                                     ->where(['a.region_pid' => getRegionPid() , 'supervisor'=> getUserPid()])->select('m.*')->paginate(20);
             return pushData($data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return responseMessage(status: 204, data: [], msg: STS_500);
         }
     }
@@ -373,7 +372,7 @@ class MeterController extends Controller
                 DB::rollBack();
                 return pushResponse($result, $request->pid ? 'Record updated' : "Form recorded");
             } catch (\Throwable $e) {
-                logError($e->getMessage());
+                logError($e);
                 DB::rollBack();
                 return responseMessage(status: 204, data: [], msg: STS_500);
             }
@@ -388,7 +387,7 @@ class MeterController extends Controller
         try {
             return Installation::updateOrCreate(['pid' => $data['pid']], $data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return false;
         }
     }
@@ -400,7 +399,7 @@ class MeterController extends Controller
         try {
             return Complain::updateOrCreate(['meter_pid' => $data['meter_pid']], $data);
         } catch (\Throwable $e) {
-            logError($e->getMessage());
+            logError($e);
             return false;
         }
     }

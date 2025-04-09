@@ -9,9 +9,23 @@ use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
 
 
-function logError($error)
+function logVar($var)
 {
-    Log::error(json_encode($error));
+    Log::info(json_encode($var));
+}
+
+function logError(\Exception $e)
+{
+    try {
+        Log::error($e, [
+            'file' => $e->getFile(),
+            'line' => $e->getLine(),
+            'trace' => $e->getTraceAsString(),
+            'user' => getUserPid()
+        ]);
+    } catch (\Throwable $th) {
+        Log::error([$e,$th]);
+    }
 }
 function public_id()
 {
@@ -246,7 +260,7 @@ function sendMail($param)
     try {
         return Mail::to($param['email'])->send(new AuthMail($param));
     } catch (\Throwable $e) {
-        logError($e->getMessage());
+        logError($e);
         return false;
     }
 }
@@ -273,7 +287,7 @@ function saveFile($file, $name = null, $path = 'documents')
         $file->move(public_path($filePath), $fileName);
         return $filePath . '/' . $fileName;
     } catch (\Throwable $e) {
-        logError($e->getMessage());
+        logError($e);
         return false;
     }
 }
@@ -289,7 +303,7 @@ function saveBase64File($file, $name = 'optimal', $path = 'documents/')
         file_put_contents($filename, base64_decode($file_data));
         return $filename;
     } catch (\Throwable $e) {
-        logError($e->getMessage());
+        logError($e);
         return false;
     }
 }
@@ -314,7 +328,7 @@ function saveImg($image, $path, $name = null)
         }
         return 'files/' . $path . $name;  // return file path+ file name and prepend files
     } catch (\Throwable $e) {
-        logError($e->getMessage());
+        logError($e);
         return false;
     }
 }
