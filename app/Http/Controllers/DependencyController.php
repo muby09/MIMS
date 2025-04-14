@@ -71,7 +71,9 @@ class DependencyController extends Controller
             'file' => 'required|mimes:xlsx,xls,csv',
         ]);
         try {
+            
             $headings = (new HeadingRowImport)->toArray($request->file('file'));
+
             if($headings[0][0] !== $this->header){
                 return back()->with('warning', "Use the template without changing/touching the headings!!!". PHP_EOL." {$this->headings}" );
             }

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 use Intervention\Image\Facades\Image;
 
 
@@ -32,6 +33,15 @@ function public_id()
     return strtoupper(str_shuffle(date('YMDHism') . time()));
 }
 
+function generateCode()
+{
+    $letters = '';
+    for ($i = 0; $i < 3; $i++) {
+        $letters .= chr(rand(65, 90)); // Random uppercase letters (A-Z)
+    }
+    $numbers = str_pad(rand(0, 99), 2, '0', STR_PAD_LEFT);
+    return $letters . $numbers;
+}
 
 function responseMessage($status, $data = [], $msg = null, $code = 200)
 {
@@ -331,4 +341,15 @@ function saveImg($image, $path, $name = null)
         logError($e);
         return false;
     }
+}
+
+
+function maatWay($model, $path)
+{
+    // $collection = Excel::toCollection(new SchoolStaff, $path);
+    $data = Excel::toArray($model, $path); //array way 
+    $header =  $data[0][0];
+    unset($data[0][0]);
+    $data = $data[0];
+    return ['header' => $header, 'data' => $data];
 }

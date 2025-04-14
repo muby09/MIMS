@@ -10,7 +10,7 @@ class MeterList extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'region_pid' , 'pid' ,'meter_number' ,'status' ,'phase' ,'type' ,'user_pid'
+        'region_pid' , 'pid' ,'meter_number' ,'status' ,'phase' ,'type' ,'user_pid','brand'
     ];
 
     private $status  =  ['', ' In store', ' Taken Out', ' Installed', 'Faulty'];

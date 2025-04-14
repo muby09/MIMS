@@ -18,6 +18,7 @@ use Illuminate\Validation\Rule;
 class MeterController extends Controller
 {
     // names of t7 item
+    private $header = ["s/n","meter number","phase","type","brand"];
     public function meterSummary(){
         try {
             $data = DB::table('meter_lists')->select(DB::raw('status,COUNT(id) as count'))->groupBy('status')->where('region_pid',getRegionPid())->get();
@@ -27,6 +28,8 @@ class MeterController extends Controller
             return pushData([],ERR_EMT);
         }
     }
+
+
     public function meterInstallation(){
         try {
             $daily = DB::table('installations as i')->join('meter_lists as m', 'm.meter_number', 'i.meter_number')
@@ -63,6 +66,7 @@ class MeterController extends Controller
             return pushData([],ERR_EMT);
         }
     }
+
     public function searchMeterList($query){
         try {
             $data = MeterList::where('meter_number', 'like', '%' . $query . '%')->paginate(20);
@@ -224,8 +228,74 @@ class MeterController extends Controller
             'file' => 'required|mimes:xlsx,xls,csv',
         ]);
         try {
-            Excel::import(new ImportMeterList,$request->file('file'));
-            return back()->with('message', 'File imported successfully!');
+
+            $path = $request->file('file'); //->getRealPath();
+            $resource = maatWay(model: new MeterList, path: $path);
+           
+            $header = $resource['header'];
+            $data = $resource['data'];
+           
+            if ($header !== $this->header) {
+                return back()->with('warning', "Use the template without changing/touching the headings!!!");
+            }
+            $error = '' ;
+            $k = $n = 0;
+            $meterArray =[];
+            $result = false;
+            foreach($data as $row){
+                $n++;
+                // $pid = public_id();
+               if(!isset($row[1])){
+                    $error .= "Meter Number on  row {$n} not inserted because meter number is empty ," . PHP_EOL;
+                    continue;
+                }
+                if(!isset($row[2])){
+                   $error .= "Meter Number on  row {$n} not inserted because meter phase is empty  ," . PHP_EOL;
+                   continue;
+                }
+                if(!isset($row[3])){
+                   $error .= "Meter Number on  row {$n} not inserted because meter type is empty  ," . PHP_EOL;
+                   continue;
+               }
+                if(MeterList::where('meter_number', $row[1])->exists()){
+                   $error .= "Meter Number on  row {$n} not inserted because {$row[1]} exists  ," . PHP_EOL;
+                   continue;
+               }else{
+                    $result = MeterList::create([
+                        'region_pid' => getRegionPid(),
+                        'pid' => public_id(),
+                        'meter_number' => $row[1],
+                        'status'  => 1,
+                        'phase'  => $row[2],
+                        'type'  => $row[3],
+                        'brand'  => $row[4] ?? 'Technovati',
+                        'creator'  => getUserPid()
+                    ]);
+                    $k++;
+               }
+                   
+            //    logVar(generateCode());
+            //    $meterArray[] = [
+            //             'region_pid' => getRegionPid(),
+            //             'pid' => public_id(),
+            //             'meter_number' => $row[1],
+            //             'status'  => 1,
+            //             'phase'  => $row[2],
+            //             'type'  => $row[3],
+            //             'brand'  => $row[4] ?? 'Technovati',
+            //             'creator'  => getUserPid()
+            //         ];
+            //   logVar($meterArray);
+             
+                
+               
+           
+            }
+          
+            if($result){
+                return back()->with('message', 'File imported successfully! : row inserted '.$k . PHP_EOL. $error);
+            }
+            return back()->with('error', 'failed to import file : row inserted ' . $k  . $error);
         } catch (\Throwable $e) {
             logError($e);
             return back()->with('error', 'Failed to import file!');
