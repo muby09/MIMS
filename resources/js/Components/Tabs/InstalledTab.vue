@@ -64,11 +64,11 @@
 
 
     const changePage = (link) => {
-    if (!link.url || link.active) {
-        return;
-    }
-    loadItem(link.url)
-};
+        if (!link.url || link.active) {
+            return;
+        }
+        loadItem(link.url)
+    };
 
 
 
