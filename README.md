@@ -6,14 +6,14 @@ It automates installation processes starting from schedule, to requesting for me
 ## Features
 
 -   **Staff Authentication:** Secure registration and login for Users(i.e, Regional Admin, Installer, Data Entry staff, Supervisor and Inventory staff).
--   **Inventory Tracking: 88Maintain a detailed record of the inventory, including meters and accessories, with real-time updates on stock levels and installations.
+-   **Inventory Tracking:** 88Maintain a detailed record of the inventory, including meters and accessories, with real-time updates on stock levels and installations.
 -   **Installation Management:** Organize and track daily installation schedules, including recording and reporting installations by meter type, region, and meter phase.
 -   **Data Validation and Authentication:** Ensure the accuracy and authenticity of data input, facilitating streamlined reporting and compliance with regulations.
-•	**Search and Filtering:** Implement easy-to-use search and filtering functionalities to quickly access specific data based on various parameters.
-•	**Report Generation:** Provide graphical reports and charts on installation, inventory, and maintenance data.
-•	**Maintenance Tracking:** Keep a comprehensive record of meter maintenance and issue resolution, including the management of customer complaints.
-•	**API Integration:** Allow integration with external systems for data exchange and extended functionalities.
-•	**NERC Template Export:** Ensure exported data complies with the NERC-approved template format for regulatory reporting.
+-   **Search and Filtering:** Implement easy-to-use search and filtering functionalities to quickly access specific data based on various parameters.
+-   **Report Generation:** Provide graphical reports and charts on installation, inventory, and maintenance data.
+-   **Maintenance Tracking:** Keep a comprehensive record of meter maintenance and issue resolution, including the management of customer complaints.
+-   **API Integration:** Allow integration with external systems for data exchange and extended functionalities.
+-   **NERC Template Export:** Ensure exported data complies with the NERC-approved template format for regulatory reporting.
 
 
 ## Tech Stack
