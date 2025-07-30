@@ -1,66 +1,103 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Meter Information Management System (MIMS)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+MIMS manages Meter Installation, Installers and Inventory.
+It automates installation processes starting from schedule, to requesting for meter by team lead to capturing which meter is install for a particular customer and when. The application features a clean, modern user interface built with Vue and Blade components.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   **Staff Authentication:** Secure registration and login for Users(i.e, Regional Admin, Installer, Data Entry staff, Supervisor and Inventory staff).
+-   **Inventory Tracking: 88Maintain a detailed record of the inventory, including meters and accessories, with real-time updates on stock levels and installations.
+-   **Installation Management:** Organize and track daily installation schedules, including recording and reporting installations by meter type, region, and meter phase.
+-   **Data Validation and Authentication:** Ensure the accuracy and authenticity of data input, facilitating streamlined reporting and compliance with regulations.
+•	**Search and Filtering:** Implement easy-to-use search and filtering functionalities to quickly access specific data based on various parameters.
+•	**Report Generation:** Provide graphical reports and charts on installation, inventory, and maintenance data.
+•	**Maintenance Tracking:** Keep a comprehensive record of meter maintenance and issue resolution, including the management of customer complaints.
+•	**API Integration:** Allow integration with external systems for data exchange and extended functionalities.
+•	**NERC Template Export:** Ensure exported data complies with the NERC-approved template format for regulatory reporting.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Tech Stack
 
-## Learning Laravel
+-   **Backend:** PHP 8.3+, Laravel 11
+-   **Frontend:** Vue, Blade, Vite
+-   **Database:** SQLite (default), MySQL, PostgreSQL
+-   **Testing:** Pest
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Getting Started
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Prerequisites
 
-## Laravel Sponsors
+-   PHP >= 8.3
+-   Composer
+-   Node.js & npm
+-   A database server (SQLite is the default)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Installation
 
-### Premium Partners
+1.  **Clone the repository:**
+    ```sh
+    git clone https://github.com/muby09/mims.git
+    cd pixel-jobs
+    ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+2.  **Install PHP dependencies:**
+    ```sh
+    composer install
+    ```
 
-## Contributing
+3.  **Install JavaScript dependencies:**
+    ```sh
+    npm install
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+4.  **Set up your environment file:**
+    Copy the example environment file and generate an application key.
+    ```sh
+    cp .env.example .env
+    php artisan key:generate
+    ```
 
-## Code of Conduct
+5.  **Configure the database:**
+    By default, the application is configured to use SQLite. Simply create the database file:
+    ```sh
+    touch database/database.sqlite
+    ```
+    If you prefer to use another database like MySQL, update the `DB_*` variables in your `.env` file accordingly.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+6.  **Run database migrations and seeding:**
+    This command will create the necessary tables and populate the database with sample jobs and tags.
+    ```sh
+    php artisan migrate --seed
+    ```
 
-## Security Vulnerabilities
+7.  **Build frontend assets:**
+    ```sh
+    npm run build
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Running the Application
 
-## License
+To serve the application locally, you can use the Artisan `serve` command:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```sh
+php artisan serve
+```
+
+For a more comprehensive development experience that includes the server, queue listener, logs, and Vite asset bundling, use the custom `dev` script:
+
+```sh
+composer run dev
+```
+
+The application will be available at `http://127.0.0.1:8000`.
+
+## Testing
+
+The application uses Pest for testing. To run the test suite, use the following command:
+
+```sh
+composer test
+```
+This will execute all the feature and unit tests located in the `tests/` directory.
