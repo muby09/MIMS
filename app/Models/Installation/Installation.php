@@ -15,14 +15,22 @@ class Installation extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'region_pid', 'pid', 'meter_number', 'preload', 'state' , 'doi', 'dt_name', 'dt_type', 'upriser' , 'pole' , 'tariff' , 'advtariff' , 'fullname' ,
-        'gsm' , 'email' , 'premises' ,  'phase', 'address', 'remark', 'feeder_33kv',  'feeder_11kv', 'meter_type',  'meter_brand', 'meter_tech' ,
-        'estimated' ,  'account_no' ,  'business_unit', 'x_cordinate', 'y_cordinate' ,  'installer' , 'supervisor' , 'rf_channel' ,
-        'din' ,  'seal' ,  'dt_code' , 'trading_zone', 'team_pid'
+        'region_pid', 'pid', 'meter_number', 'preload', 'state', 'doi', 'dt_name', 'dt_type', 'upriser', 'pole',
+        'tariff', 'advtariff', 'title', 'fullname', 'gsm', 'email', 'premises', 'phase', 'address', 'remark',
+        'feeder_33kv', 'feeder_11kv', 'meter_type', 'meter_brand', 'meter_tech', 'estimated', 'account_no',
+        'business_unit', 'service_center', 'x_cordinate', 'y_cordinate', 'installer', 'supervisor', 'rf_channel', 'din', 'seal',
+        'dt_code', 'trading_zone', 'team_pid', 'creator', 'photo'
     ];
 
+    public function setMeterNumberAttribute($value): void
+    {
+        $this->attributes['meter_number'] = normalizeMeterNumber($value);
+    }
 
-
+    public function setGsmAttribute($value): void
+    {
+        $this->attributes['gsm'] = normalizeGsmNumber($value);
+    }
 
     protected $appends = ['date'];
 
@@ -58,8 +66,5 @@ class Installation extends Model
             get: fn() => isset($this->attributes['doi']) ? formatDate($this->attributes['doi']) : null
         );
     }
-
-
-
 
 }

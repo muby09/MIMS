@@ -119,6 +119,7 @@
         'estimated' :'',
         'account_no':'' ,
         'business_unit':'',
+        'service_center':'',
         'x_cordinate':'',
         'y_cordinate':'' ,
         'installer':'' ,
@@ -128,18 +129,44 @@
         'seal':'' ,
         'dt_code':'',
         'zone':'',
+        'pid':'',
+        'photo':null,
         errors:{}
     })
 
     const showModal = ref(false)
+    const photoPreview = ref(null)
+    const currentPhoto = ref(null)
+
+    const photoUrl = (path) => path ? `/storage/${path.replace(/^\/+/, '')}` : null
+
+    const handlePhotoChange = (event) => {
+        const file = event.target.files?.[0] ?? null
+        meterForm.value.photo = file
+        if (photoPreview.value?.startsWith('blob:')) {
+            URL.revokeObjectURL(photoPreview.value)
+        }
+        photoPreview.value = file ? URL.createObjectURL(file) : photoUrl(currentPhoto.value)
+    }
 
     const closeModal = () => {
+        if (photoPreview.value?.startsWith('blob:')) {
+            URL.revokeObjectURL(photoPreview.value)
+        }
+        photoPreview.value = null
+        currentPhoto.value = null
+        meterForm.value.photo = null
+        meterForm.value.errors = {}
         showModal.value = false;
     }
 
 
 
      const editRecord = (data) => {
+          meterForm.value.errors = {}
+          meterForm.value.photo = null
+          currentPhoto.value = data.photo ?? null
+          photoPreview.value = photoUrl(currentPhoto.value)
         showModal.value = true;
         meterForm.value.meter_number = data.meter_number
         meterForm.value.fullname = data.fullname
@@ -152,6 +179,7 @@
         meterForm.value.account_no = data.account_no
         meterForm.value.address = data.address
         meterForm.value.business_unit = data.business_unit
+        meterForm.value.service_center = data.service_center ?? ''
         meterForm.value.gsm = data.gsm
         meterForm.value.email = data.email
         meterForm.value.preload = data.preload
@@ -254,7 +282,17 @@
 
       const recordForm = () => {
         meterForm.value.errors = {}
-        store.dispatch('postMethod', { url: '/record-form', param: meterForm.value }).then((data ) => {
+                const formData = new FormData()
+                Object.entries(meterForm.value).forEach(([key, value]) => {
+                        if (key === 'errors' || value === null || value === undefined) {
+                                return
+                        }
+                        if (key === 'photo' && !(value instanceof File)) return
+                        if (key === 'pid' && !value) return
+                        formData.append(key, value)
+                })
+
+                store.dispatch('postMethod', { url: '/record-form', param: formData }).then((data ) => {
         if (data?.status == 422) {
             meterForm.value.errors = transformValidationErrors(data.data)
         } else if (data?.status == 201) {
@@ -602,19 +640,6 @@
                                         <InputError class="mt-2" :message="meterForm?.errors?.estimated" />       
                                 </div> -->
 
-                                 <div class="flex flex-col ">
-                                        <InputLabel for="pole" value="Service Center" />
-                                        <TextInput
-                                            id="pole"
-                                            type="text"
-                                            class="mt-1 block w-full"
-                                            v-model="meterForm.service_center"
-                                            placeholder="Service Center"
-                                            
-                                        />
-                                        <InputError class="mt-2" :message="meterForm?.errors?.service_center" />       
-                                </div>
-
                                 <div class="flex flex-col ">
                                         <InputLabel for="unit" value="Business Unit" />
                                         <TextInput
@@ -627,6 +652,18 @@
                                         />
                                         <InputError class="mt-2" :message="meterForm?.errors?.business_unit" />       
                                 </div>
+
+                                    <div class="flex flex-col ">
+                                        <InputLabel for="service_center" value="Service Center" />
+                                        <TextInput
+                                            id="service_center"
+                                            type="text"
+                                            class="mt-1 block w-full"
+                                            v-model="meterForm.service_center"
+                                            placeholder="Service Center"
+                                        />
+                                        <InputError class="mt-2" :message="meterForm?.errors?.service_center" />
+                                    </div>
 
                                  <div class="flex flex-col ">
                                         <InputLabel for="account" value="Account Number" />
@@ -704,6 +741,18 @@
                             </div>
 
                         </div>
+                        <div class="mt-4 flex flex-col">
+                            <InputLabel for="edit-photo" value="Installation Photo" />
+                            <input
+                                id="edit-photo"
+                                type="file"
+                                accept="image/jpeg,image/png"
+                                class="mt-1 block w-full text-sm border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                                @change="handlePhotoChange"
+                            />
+                            <InputError class="mt-2" :message="meterForm?.errors?.photo" />
+                            <img v-if="photoPreview" :src="photoPreview" alt="Installation photo preview" class="mt-2 h-24 w-24 rounded object-cover" />
+                        </div>
                         </div>
 
            </form>
@@ -774,6 +823,7 @@
                             <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Meter Seal</th>
                             <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Latitude</th>
                             <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Longitude</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Photo</th>
                             <!--<th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Connection Status</th> -->
                             <!-- <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">contact information</th> -->
                             <th  class="p-3 text-sm font-semibold tracking-wide text-left table-bordered"> 
@@ -801,6 +851,12 @@
                             <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.seal }}</td>
                             <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.x_cordinate }}</td>
                             <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.y_cordinate }}</td>
+                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">
+                                <a v-if="item?.photo" :href="photoUrl(item.photo)" target="_blank" rel="noopener noreferrer">
+                                    <img :src="photoUrl(item.photo)" alt="Installation photo" loading="lazy" class="h-12 w-12 rounded object-cover" />
+                                </a>
+                                <span v-else>None</span>
+                            </td>
                             <!--<td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.connection_status }}</td>-->
                             <!--<td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">{{ item?.contact }}</td>-->
                            <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered" >

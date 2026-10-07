@@ -1,0 +1,90 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "MIMS API",
+    "version": "1.0.0",
+    "description": "OpenAPI specification for MIMS Meter Installation Management System."
+  },
+  "servers": [
+    {
+      "url": "https://your-domain/api/v1"
+    }
+  ],
+  "paths": {
+    "/installations": {
+      "post": {
+        "summary": "Create single installation",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InstallationCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {"description": "Created"},
+          "422": {"description": "Validation error"}
+        }
+      }
+    },
+    "/installations/bulk": {
+      "post": {
+        "summary": "Bulk installation upload",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {"type": "string", "format": "binary"},
+                  "region_id": {"type": "integer"},
+                  "created_by": {"type": "integer"}
+                },
+                "required": ["file", "region_id"]
+              }
+            }
+          }
+        },
+        "responses": {"201": {"description": "Bulk upload completed"}}
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "InstallationCreate": {
+        "type": "object",
+        "properties": {
+          "meter_number": {"type": "string"},
+          "pole": {"type": "integer"},
+          "tariff": {"type": "string"},
+          "advtariff": {"type": "string"},
+          "fullname": {"type": "string"},
+          "gsm": {"type": "string"},
+          "premises": {"type": "string"},
+          "phase": {"type": "string"},
+          "address": {"type": "string"},
+          "feeder_33kv": {"type": "string"},
+          "feeder_11kv": {"type": "string"},
+          "meter_type": {"type": "string"},
+          "meter_brand": {"type": "string"},
+          "account_no": {"type": "string"},
+          "business_unit": {"type": "string"},
+          "x_cordinate": {"type": "number"},
+          "y_cordinate": {"type": "number"},
+          "installer": {"type": "string"},
+          "seal": {"type": "string"},
+          "state": {"type": "string"},
+          "preload": {"type": "number"},
+          "email": {"type": "string", "format": "email"},
+          "remarks": {"type": "string"},
+          "region_id": {"type": "integer"}
+        },
+        "required": ["meter_number", "pole", "tariff", "fullname", "gsm", "address", "feeder_33kv", "feeder_11kv", "meter_type", "meter_brand", "account_no", "business_unit", "x_cordinate", "y_cordinate", "installer", "seal", "state", "preload", "region_id"]
+      }
+    }
+  }
+}

@@ -1,0 +1,2 @@
+﻿meter_number,fullname,gsm,account_no,address,state,zone,pole,phase,premises,tariff,advtariff,feeder_33kv,feeder_11kv,meter_type,meter_brand,x_cordinate,y_cordinate,seal,business_unit,installer,preload
+MTR-1001,John Doe,08012345678,ACC-001,No 1 Main Street,Gombe,NORTH,1,Single,Residential,R2,R2,FEEDER-33A,FEEDER-11A,SINGLE PHASE,LUMINOUS,9.12345,11.67890,12345,MAP,installer_alpha,25

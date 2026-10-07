@@ -13,6 +13,11 @@ class MeterList extends Model
         'region_pid' , 'pid' ,'meter_number' ,'status' ,'phase' ,'type' ,'user_pid','brand'
     ];
 
+    public function setMeterNumberAttribute($value): void
+    {
+        $this->attributes['meter_number'] = normalizeMeterNumber($value);
+    }
+
     private $status  =  ['', ' In store', ' Taken Out', ' Installed', 'Faulty'];
 
     protected $appends  = ['meter_status'];

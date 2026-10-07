@@ -41,7 +41,7 @@ Route::middleware(['auth'])->group(function(){
     });
     Route::get('/logout-region', [DashboardController::class, 'logOutRegion'])->name('logout.region');
 
-    // super admin roles 
+    // super admin roles
     Route::middleware(['role:super admin|region admin'])->group(function(){
         Route::get('/dependency', [DependencyController::class, 'index'])->name('dependency');
         Route::get('/feeders', [FeederController::class, 'index'])->name('feeders');
@@ -52,25 +52,25 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/load-trading-zone', [DependencyController::class, 'loadTradingZone'])->name('load.zone');
 
 
-        Route::post('/create-meter-type', [DependencyController::class, 'createMeterType'])->name('create.zone');
-        Route::get('/load-meter-types', [DependencyController::class, 'loadMeterTypes'])->name('load.zone');
+        Route::post('/create-meter-type', [DependencyController::class, 'createMeterType'])->name('create.meter.type');
+        Route::get('/load-meter-types', [DependencyController::class, 'loadMeterTypes'])->name('load.meter.types');
 
-        Route::post('/create-meter-brand', [DependencyController::class, 'createMeterBrand'])->name('create.types');
-        Route::get('/load-meter-brand', [DependencyController::class, 'loadMeterBrands'])->name('load.brands');
+        Route::post('/create-meter-brand', [DependencyController::class, 'createMeterBrand'])->name('create.meter.brand');
+        Route::get('/load-meter-brand', [DependencyController::class, 'loadMeterBrands'])->name('load.meter.brands');
 
         Route::post('/create-33kv-feeder', [FeederController::class, 'create33kvFeeder'])->name('create.33kv.feeder');
         Route::get('/load-feeder-33', [FeederController::class, 'load33kvFeeder']);//->name('create.33kv.feeder');
         Route::post('/create-11kv-feeder', [FeederController::class, 'create11kvFeeder'])->name('create.11kv.feeder');
         Route::get('/load-feeder-11', [FeederController::class, 'load11kvFeeder']);//->name('create.33kv.feeder');
-        
-        // create store Item 
+
+        // create store Item
         Route::post('/create-item-name', [ItemController::class, 'createItemName']);
         Route::get('/item-names', [ItemController::class, 'loadItemNames']);
-        
-        
+
+
     });
-    
-    // region admin 
+
+    // region admin
     Route::middleware(['role:region admin|super admin'])->group(function(){
         Route::get('/meter-list', [MeterController::class, 'index'])->name('meter.list');
         Route::inertia('/teams', 'Region/Team')->name('teams');
@@ -79,28 +79,28 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/add-team-member', [TeamController::class, 'addTeamMember'])->name('add.team.member');
         Route::get('/load-team-member', [TeamController::class, 'loadTeamMembers'])->name('load.team.members');
 
-        // users 
+        // users
         Route::inertia('/staff', 'Staff/Staff')->name('create.staff');
         Route::post('/staff' , [StaffController::class, 'createStaff']);
         Route::get('/load-staff' , [StaffController::class, 'loadStaff']);
         Route::get('/load-admin-staff' , [StaffController::class, 'loadAdminStaff']);
         Route::get('/search-staff-list/{query}' , [StaffController::class, 'searchStaff']);
-        
-        
-        //Schedule 
+
+
+        //Schedule
         Route::get('/schedules' , [DependencyController::class, 'schedules'])->name('schedules');
         Route::post('/schedules' , [DependencyController::class, 'uploadSchedule']);
-        
-        
+
+
     });
-    
+
     //filed supervisor
     Route::middleware(['role:supervisor|region admin'])->group(function () {
-        // request 
+        // request
         Route::inertia('/request', 'Region/Request')->name('request');
         Route::get('/load-request', [RequestController::class, 'index']);
         Route::post('/request-item', [RequestController::class, 'itemRequest']);;
-        
+
     });
     //filed supervisor
     Route::middleware(['role:supervisor|super admin|region admin'])->group(function () {
@@ -109,12 +109,13 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/load-team-assigned-meters', [MeterController::class, 'loadTeamAssignedMeters']);//->name('assigned.meters');
         Route::inertia('/team-members', 'Region/TeamMember')->name('team.members');
         Route::get('/load-team-member', [TeamController::class, 'loadMembers']);//->name('team.members');
-        
+
     });
     // data staff
     Route::middleware(['role:data entry|super admin|region admin'])->group(function () {
         Route::inertia('/installations', 'Region/Installations')->name('installations');
         Route::post('/record-form', [MeterController::class, 'recordForm'])->name('record.form');
+        Route::post('/installations/bulk', [MeterController::class, 'bulkInstallationUpload'])->name('installations.bulk.upload');
         Route::get('/schedule-list' , [DependencyController::class, 'scheduleList'])->name('schedule.list');
         Route::get('/search-schedule-list/{query}', [DependencyController::class, 'searchScheduleList']);//->name('schedule.list');
         Route::get('/installed-list', [MeterController::class, 'installedList']);//->name('schedule.list');
@@ -131,10 +132,10 @@ Route::middleware(['auth'])->group(function(){
     });
     // staff
     Route::middleware(['role:staff,super admin'])->group(function () {});
-    // installer 
+    // installer
     Route::middleware(['role:installer,super admin'])->group(function () {});
 
-    // store manager 
+    // store manager
     Route::middleware(['role:store|super admin|region admin'])->group(function () {
         Route::inertia('/request-list', 'Region/RequestList')->name('request.list');
         Route::get('/load-request-list', [RequestController::class, 'loadRequestList']);
@@ -147,12 +148,12 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/remove-damage-item',[ItemController::class,'removeDamageItem'])->name('remove.damage.item');
         Route::get('/damaged-items',[ItemController::class,'damagedItems'])->name('damage.item');
         Route::get('/damaged-item-details',[ItemController::class,'damagedItemDetail'])->name('damaged.item.detail');
-        // approve request 
+        // approve request
         Route::post('/approve-request', [RequestController::class, 'approveRequest']);
 
     });
-    
-    
+
+
     Route::post('/update-passord',[StaffController::class,'updatePassword']);//->name('damaged.item.detail');
 
 });
@@ -180,3 +181,4 @@ Route::get('/drop-meter-brands', [DropDownController::class, 'dropDownMeterBrand
 
 
 require __DIR__.'/auth.php';
+require __DIR__.'/api.php';

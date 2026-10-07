@@ -14,6 +14,10 @@ class UserDetail extends Model
         'lga_of_origin' ,  'address' , 'creator' , 'region_pid','username', 'gsm' , 'path'
         ];
 
+    public function setGsmAttribute($value): void
+    {
+        $this->attributes['gsm'] = normalizeGsmNumber($value);
+    }
 
     protected $appends = ['date'];
 

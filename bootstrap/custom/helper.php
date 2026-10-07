@@ -215,10 +215,10 @@ function isWeekend($date)
     $date = date("l", $date);
     $date = strtolower($date);
     return ($date == "saturday" || $date == "sunday") ;
-    
+
 }
 
- 
+
 
 function sprintNumber($num, $pre = 3)
 {
@@ -344,10 +344,60 @@ function saveImg($image, $path, $name = null)
 }
 
 
+function normalizeMeterNumber($value): ?string
+{
+    if ($value === null || $value === '') {
+        return $value;
+    }
+
+    $meterNumber = trim((string) $value);
+
+    if (!preg_match('/^\d+$/', $meterNumber)) {
+        return $meterNumber;
+    }
+
+    if (str_starts_with($meterNumber, '0')) {
+        return $meterNumber;
+    }
+
+    if (strlen($meterNumber) === 12) {
+        return '0' . $meterNumber;
+    }
+
+    return $meterNumber;
+}
+
+function normalizeGsmNumber($value): ?string
+{
+    if ($value === null || $value === '') {
+        return $value;
+    }
+
+    $gsm = trim((string) $value);
+
+    if ($gsm === '0') {
+        return '00000000000';
+    }
+
+    if (!preg_match('/^\d+$/', $gsm)) {
+        return $gsm;
+    }
+
+    if (strlen($gsm) === 11 && str_starts_with($gsm, '0')) {
+        return $gsm;
+    }
+
+    if (strlen($gsm) === 10) {
+        return '0' . $gsm;
+    }
+
+    return $gsm;
+}
+
 function maatWay($model, $path)
 {
     // $collection = Excel::toCollection(new SchoolStaff, $path);
-    $data = Excel::toArray($model, $path); //array way 
+    $data = Excel::toArray($model, $path); //array way
     $header =  $data[0][0];
     unset($data[0][0]);
     $data = $data[0];

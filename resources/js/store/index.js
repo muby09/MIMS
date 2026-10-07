@@ -18,18 +18,18 @@ const store = createStore({
             message: 'success',
             type: 'success'
         },
-       
-      
+
+
         loadingProcess:false,
         units:['pieces', 'measurement' , 'carton' , 'packet'],
         memoStatus:['','General','Selected Departments','Selected Staff'],
         // memoStatus:['','General','Selected Departments','Selected Staff'],
     },
     actions:{
-        
-        // end of auth 
-      
-            //load staff  
+
+        // end of auth
+
+            //load staff
             getMethod({commit},{url}){
                 commit('setSpinner', true)
                 return axios.get(url)
@@ -37,24 +37,23 @@ const store = createStore({
                         if(data?.status == 205){
                             commit('notify',{message:data?.message,type:'danger'})
                         }
-                   
+
                         commit('setSpinner', false)
-                        return data;  
+                        return data;
                     }).catch(e => {
                         commit('setSpinner', false)
                         console.log(e);
                         commit('notify', { message: e?.code, type: 'danger' })
-                       
+
                         if(e?.code == '"ERR_NETWORK"'){
                             store.commit('notify', { message: e?.message, type: 'danger' })
                         }
                         // alert('weting be this')
                     })
             },
-            //load staff  
+            //load staff
             postMethod({commit},{url,param,headers={}}){
                 commit('setSpinner', true)
-                param._token = page.props.csrf_token
                 return axios.post(url,param,{
                      headers: headers,
                 })
@@ -68,15 +67,25 @@ const store = createStore({
                             commit('notify',{message:data.message,type:'danger'})
                         }
                         commit('setSpinner', false)
-                        return data;  
+                        return data;
                     }).catch(e => {
                         commit('setSpinner', false)
-                        if(e?.code == '"ERR_NETWORK"'){
-                            store.commit('notify', { message: e?.message, type: 'danger' })
-                        }
-                      
                         console.log(e);
-                        
+                        const responseData = e?.response?.data
+                        const status = responseData?.status ?? e?.response?.status
+
+                        commit('notify', {
+                            message: responseData?.message ?? e?.message ?? 'Request failed',
+                            type: status === 422 ? 'warning' : 'danger'
+                        })
+
+                        if (responseData) {
+                            return {
+                                ...responseData,
+                                status,
+                                data: responseData.data ?? responseData.errors ?? []
+                            }
+                        }
                     })
             },
 
@@ -96,16 +105,16 @@ const store = createStore({
                             commit('notify',{message:data.message,type:'danger'})
                         }
                         commit('setSpinner', false)
-                        return data;  
+                        return data;
                     }).catch(e => {
                         if(e?.code == '"ERR_NETWORK"'){
                             store.commit('notify', { message: e?.message, type: 'danger' })
                         }
                         commit('setSpinner', false)
-                    
+
                         console.log(e);
                     })
-               
+
             },
 
             putMethod({commit},{url,prompt = null, param = null}){
@@ -125,19 +134,19 @@ const store = createStore({
                             commit('notify',{message:data.message,type:'danger'})
                         }
                         commit('setSpinner', false)
-                        return data;  
+                        return data;
                     }).catch(e => {
-                        
+
                         if(e?.code == '"ERR_NETWORK"'){
                             store.commit('notify', { message: e?.message, type: 'danger' })
                         }
                         commit('setSpinner', false)
-                     
+
                         console.log(e);
                     })
             },
 
-            // load dropdown 
+            // load dropdown
             loadDropdown({},url){
             return axios.get('/drop-'+url)
                     .then(({data})=>{
@@ -147,10 +156,10 @@ const store = createStore({
                             return [];
                         }
                     })
-            
+
         },
 
-            
+
     },
     mutations:{
         setSpinner: (state,spin) =>{
@@ -164,11 +173,11 @@ const store = createStore({
                 state.notification.status = false;
             }, 5000)
         },
-         
-         
+
+
     },
     getters:{
-         // global functions 
+         // global functions
         numberFormat(number, point = 2) {
             return number.toFixed(point).replace(/\d(?=(\d{3})+\.)/g, '$&,')
         }

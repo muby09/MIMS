@@ -18,7 +18,7 @@ class ImportMeterList implements ToModel,WithHeadingRow
         return new MeterList([
             'region_pid' => getRegionPid(),
             'pid' => public_id(),
-            'meter_number' => $row['meter_number'],
+            'meter_number' => normalizeMeterNumber($row['meter_number'] ?? null),
             'status'  => $row['status'] ?? 1 ,
             'phase'  => $row['phase'],
             'type'  => $row['type'],
