@@ -26,7 +26,7 @@
     loadItem()
 
      const handleKeyup = (event) => {
-        
+
         store.dispatch('getMethod', { url:'search-installed-list/'+event.target.value }).then((data) => {
         if (data?.status == 200) {
             schedules.value = data.data;
@@ -42,7 +42,7 @@
         errors:{}
     })
 
-    
+
      const filterRecord = () => {
         store.dispatch('postMethod', { url:'filter-installed-list',param: filterForm.value }).then((data) => {
         if (data?.status == 200) {
@@ -72,7 +72,7 @@
 
 
 
-// edit form goes here 
+// edit form goes here
 
     const tariffs = [
         {"id":  "R1", "text": "R1"},
@@ -91,13 +91,13 @@
         {"id": "COMMERCIAL", "text": "COMMERCIAL"},
         {"id": "SPECIAL", "text": "SPECIAL"},
     ]
-  
-    
+
+
     const meterForm = ref({
-        'meter_number' :'', 
-        'preload':25, 
-        'state':'' , 
-        'doi':'', 
+        'meter_number' :'',
+        'preload':25,
+        'state':'' ,
+        'doi':'',
         'dt_name':'',
         'dt_type':'',
         'upriser':'' ,
@@ -204,7 +204,7 @@
         meterForm.value.zone = data.trading_zone
         meterForm.value.region_pid = data.region_pid
         meterForm.value.pid = data.pid
-     
+
         loadStateZone(data.state)
         load33kvFeeder(data.trading_zone)
         load11kvFeeder(data.feeder_33kv)
@@ -305,16 +305,16 @@
     }
 
 
-    // export data to excel 
+    // export data to excel
     function exportToExcel(data) {
         var dataArray = []
         var count = 0
         data.forEach((el) => {
             dataArray.push({
                     'S/N': ++count,'Customer Name': el?.fullname, 'Address': el.address, 'Phone No': el?.gsm, 'Account No.': el?.account_no,
-                    'Meter No.': el?.meter_number,'Seal No.': el?.seal,'33KV Feeder': el?.feeder33kv?.name,'11kv Feeder Name': el?.feeder11kv?.name, 'DT Name': el?.dt_name, 
+                    'Meter No.': el?.meter_number,'Seal No.': el?.seal,'33KV Feeder': el?.feeder33kv?.name,'11kv Feeder Name': el?.feeder11kv?.name, 'DT Name': el?.dt_name,
                     'Service Band': '', 'Region': el?.region?.region, 'GPS LATITUDE': el?.x_cordinate, 'GPS LONGTITUDE': el?.y_cordinate, 'Type of Meter': el?.meter_type,
-                    'Meter Status': el?.status || 'New', 'Date of Installation': el?.doi, 'Name of MAP': 'Triple Seventh Ltd', 'Remarks': el.remark,  
+                    'Meter Status': el?.status || 'New', 'Date of Installation': el?.doi, 'Name of MAP': 'Triple Seventh Ltd', 'Remarks': el.remark,
                 })
             })
 
@@ -334,10 +334,10 @@
 
 <template>
     <div>
-        
+
         <Modal :show="showModal" @close="closeModal" max-width="6xl" title="Record Data" @submit="recordForm">
            <form action="" >
-                
+
                     <div class="py-4 px-4">
 
 
@@ -363,7 +363,7 @@
                                                 type="date"
                                                 class="mt-1 block w-full"
                                                 v-model="meterForm.doi"
-                                               
+
                                             />
                                             <InputError class="mt-2" :message="meterForm?.errors?.doi" />
                                     </div>
@@ -375,7 +375,7 @@
                                                 class="mt-1 block w-full"
                                                 v-model="meterForm.preload"
                                                 placeholder="e.g 15"
-                                               
+
                                             />
                                             <InputError class="mt-2" :message="meterForm?.errors?.preload" />
                                     </div>
@@ -389,19 +389,19 @@
                                                     <option v-for="option in states" :key="option.id" :value="option.id">
                                                         {{ option.text }}
                                                     </option>
-                                                </select> 
-                                            <InputError class="mt-2" :message="meterForm?.errors?.state" /> 
+                                                </select>
+                                            <InputError class="mt-2" :message="meterForm?.errors?.state" />
                                     </div>
                                     <div class="flex flex-col ">
-                                           
+
                                             <InputLabel for="zone" value="Trading Zone" />
                                                 <select v-model="meterForm.zone" @change="load33kvFeeder($event.target.value)" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                                                     <option value="" selected>Choose State</option>
                                                     <option v-for="option in zones" :key="option.id" :value="option.id">
                                                         {{ option.text }}
                                                     </option>
-                                                </select> 
-                                                <InputError class="mt-2" :message="meterForm?.errors?.zone" />  
+                                                </select>
+                                                <InputError class="mt-2" :message="meterForm?.errors?.zone" />
                                     </div>
                                 </div>
 
@@ -409,7 +409,7 @@
 
                                 <!--<div class="grid grid-cols-1  md:grid-cols-2 gap-2">
 
-                                        
+
                                     <div class="flex flex-col ">
                                         <InputLabel for="dt_code" value="DT Number" />
                                             <TextInput
@@ -433,14 +433,14 @@
                                             />
                                             <InputError class="mt-2" :message="meterForm?.errors?.dt_capacity" />
                                     </div>
-                                    
+
                                 </div> -->
 
-                               
+
 
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-5 gap-2"> 
+                        <div class="grid grid-cols-1 md:grid-cols-5 gap-2">
                             <div class="flex flex-col ">
                                         <InputLabel for="dt_name" value="DT Name" />
                                             <TextInput
@@ -475,9 +475,9 @@
                                                 <div class="flex items-center ml-2">
                                                     <label for="radio2" class="mr-2 text-sm font-medium text-gray-900">Private</label>
                                                     <input id="radio2" type="radio" name="dt_type" v-model="meterForm.dt_type" value="Private" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                                                </div>      
-                                                
-                                            </div>  
+                                                </div>
+
+                                            </div>
                                             <InputError class="mt-2" :message="meterForm?.errors?.dt_type" />
 
                                         </div>
@@ -485,20 +485,20 @@
 
 
                              <!--  <div class="grid grid-cols-1  md:grid-cols-2 gap-2"> -->
-                                        
+
                                     <div class="flex flex-col ">
-                                        
+
                                             <BaseSelect v-model="meterForm.tariff" label="Present Tariff" :selected="meterForm.tariff"
                                                 :options="tariffs"/>
-                                                <InputError class="mt-2" :message="meterForm?.errors?.tariff" />  
+                                                <InputError class="mt-2" :message="meterForm?.errors?.tariff" />
                                     </div>
 
                                     <div class="flex flex-col ">
                                              <BaseSelect v-model="meterForm.advtariff" label="Advised Tariff" :selected="meterForm.advtariff"
                                                 :options="tariffs"/>
-                                                <InputError class="mt-2" :message="meterForm?.errors?.advtariff" />  
+                                                <InputError class="mt-2" :message="meterForm?.errors?.advtariff" />
                                     </div>
-                                    
+
                               </div>
 
                         <div class="grid grid-cols-1 gap-2 sm:grid-cols-3 md:grid-cols-3">
@@ -510,12 +510,12 @@
                                             class="mt-1 block w-full"
                                             v-model="meterForm.fullname"
                                             placeholder="fullname"
-                                            
+
                                         />
-                                        <InputError class="mt-2" :message="meterForm?.errors?.fullname" />       
+                                        <InputError class="mt-2" :message="meterForm?.errors?.fullname" />
                                 </div>
-                             
-                            
+
+
                              <div class="flex flex-col ">
                                         <InputLabel for="gsm" value="Phone Number" />
                                         <TextInput
@@ -526,7 +526,7 @@
                                             placeholder="Phone Number"
                                             required
                                         />
-                                        <InputError class="mt-2" :message="meterForm?.errors?.gsm" />       
+                                        <InputError class="mt-2" :message="meterForm?.errors?.gsm" />
                                 </div>
 
                                 <div class="flex flex-col ">
@@ -537,9 +537,9 @@
                                             class="mt-1 block w-full"
                                             v-model="meterForm.email"
                                             placeholder="Customer Email"
-                                            
+
                                         />
-                                        <InputError class="mt-2" :message="meterForm?.errors?.email" />       
+                                        <InputError class="mt-2" :message="meterForm?.errors?.email" />
                                 </div>
                         </div>
 
@@ -548,7 +548,7 @@
 
 
                         <div class="grid grid-cols-1 gap-2 sm:grid-cols-3 md:grid-cols-3">
-                             
+
                              <div class="flex flex-col ">
                                         <InputLabel for="feeder_33kv" value="33 kv Feeder" />
                                         <select v-model="meterForm.feeder_33kv" @change="load11kvFeeder($event.target.value)" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
@@ -556,20 +556,20 @@
                                             <option v-for="option in feeder33s" :key="option.id" :value="option.id">
                                                 {{ option.text }}
                                             </option>
-                                        </select> 
-                                      
-                                        <InputError class="mt-2" :message="meterForm?.errors?.feeder_33kv" />       
+                                        </select>
+
+                                        <InputError class="mt-2" :message="meterForm?.errors?.feeder_33kv" />
                                 </div>
                              <div class="flex flex-col ">
                                         <BaseSelect v-model="meterForm.feeder_11kv" label="11 kv Feeder" :selected="meterForm.feeder_11kv"
                                          :options="feeder11s"/>
-                                        <InputError class="mt-2" :message="meterForm?.errors?.feeder_11kv" />       
+                                        <InputError class="mt-2" :message="meterForm?.errors?.feeder_11kv" />
                                 </div>
                              <div class="flex flex-col ">
-                                       
+
                                         <BaseSelect v-model="meterForm.premises" label="Use of Premises" :selected="meterForm.premises"
                                          :options="premises"/>
-                                        <InputError class="mt-2" :message="meterForm?.errors?.premises" />       
+                                        <InputError class="mt-2" :message="meterForm?.errors?.premises" />
                                 </div>
                         </div>
 
@@ -585,25 +585,25 @@
                                         <div class="flex items-center ml-2">
                                             <label for="radio2" class="mr-2 text-sm font-medium text-gray-900">Yellow</label>
                                             <input id="radio2" type="radio" name="phase" v-model="meterForm.phase" value="Yellow" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                                        </div>      
+                                        </div>
                                         <div class="flex items-center ml-2">
                                             <label for="radio3" class="mr-2 text-sm font-medium text-gray-900">Blue</label>
                                             <input id="radio3" type="radio" name="phase" v-model="meterForm.phase" value="Blue" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
                                         </div>
-                                    </div>  
-                                        <InputError class="mt-2" :message="meterForm?.errors?.phase" />       
+                                    </div>
+                                        <InputError class="mt-2" :message="meterForm?.errors?.phase" />
 
                                 </div>
                              <div class="flex flex-col ">
                                         <BaseSelect v-model="meterForm.meter_type" label="Meter Type" :selected="meterForm.meter_type"
                                          :options="types"/>
-                                        <InputError class="mt-2" :message="meterForm?.errors?.meter_type" />       
+                                        <InputError class="mt-2" :message="meterForm?.errors?.meter_type" />
                                 </div>
                              <div class="flex flex-col ">
-                                       
+
                                         <BaseSelect v-model="meterForm.meter_brand" label="Meter Brand" :selected="meterForm.meter_brand"
                                          :options="brands"/>
-                                        <InputError class="mt-2" :message="meterForm?.errors?.meter_brand" />       
+                                        <InputError class="mt-2" :message="meterForm?.errors?.meter_brand" />
                                 </div>
 
                                  <div class="flex flex-col ">
@@ -614,18 +614,18 @@
                                             class="mt-1 block w-full"
                                             v-model="meterForm.seal"
                                             placeholder="New Seal Number"
-                                            
+
                                         />
-                                        <InputError class="mt-2" :message="meterForm?.errors?.seal" />       
+                                        <InputError class="mt-2" :message="meterForm?.errors?.seal" />
                                 </div>
                         </div>
 
 
                         <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
-                            
-                                
 
-                                
+
+
+
 
                                  <!--<div class="flex flex-col ">
                                         <InputLabel for="pole" value="Estimated Load" />
@@ -635,9 +635,9 @@
                                             class="mt-1 block w-full"
                                             v-model="meterForm.estimated"
                                             placeholder="Customer Estimated Load"
-                                            
+
                                         />
-                                        <InputError class="mt-2" :message="meterForm?.errors?.estimated" />       
+                                        <InputError class="mt-2" :message="meterForm?.errors?.estimated" />
                                 </div> -->
 
                                 <div class="flex flex-col ">
@@ -648,9 +648,9 @@
                                             class="mt-1 block w-full"
                                             v-model="meterForm.business_unit"
                                             placeholder="Business Unit"
-                                            
+
                                         />
-                                        <InputError class="mt-2" :message="meterForm?.errors?.business_unit" />       
+                                        <InputError class="mt-2" :message="meterForm?.errors?.business_unit" />
                                 </div>
 
                                     <div class="flex flex-col ">
@@ -673,9 +673,9 @@
                                             class="mt-1 block w-full"
                                             v-model="meterForm.account_no"
                                             placeholder="Customer Account Number"
-                                            
+
                                         />
-                                        <InputError class="mt-2" :message="meterForm?.errors?.account_no" />       
+                                        <InputError class="mt-2" :message="meterForm?.errors?.account_no" />
                                 </div>
 
                         </div>
@@ -689,15 +689,15 @@
                                             class="mt-1 block w-full"
                                             v-model="meterForm.pole"
                                             placeholder="e.g 11 "
-                                            
+
                                         />
-                                        <InputError class="mt-2" :message="meterForm?.errors?.pole" />       
+                                        <InputError class="mt-2" :message="meterForm?.errors?.pole" />
                                 </div>
 
                                 <div class="flex flex-col ">
                                         <BaseSelect v-model="meterForm.installer" label="Installer" :selected="meterForm.installer"
                                          :options="installers"/>
-                                        <InputError class="mt-2" :message="meterForm?.errors?.installer" />       
+                                        <InputError class="mt-2" :message="meterForm?.errors?.installer" />
                                 </div>
 
                                  <div class="flex flex-col ">
@@ -708,9 +708,9 @@
                                             class="mt-1 block w-full"
                                             v-model="meterForm.x_cordinate"
                                             placeholder="0.1121223"
-                                            
+
                                         />
-                                        <InputError class="mt-2" :message="meterForm?.errors?.x_cordinate" />       
+                                        <InputError class="mt-2" :message="meterForm?.errors?.x_cordinate" />
                                 </div>
                                  <div class="flex flex-col ">
                                         <InputLabel for="longitude" value="Longitude" />
@@ -720,9 +720,9 @@
                                             class="mt-1 block w-full"
                                             v-model="meterForm.y_cordinate"
                                             placeholder="0.01232333"
-                                            
+
                                         />
-                                        <InputError class="mt-2" :message="meterForm?.errors?.y_cordinate" />       
+                                        <InputError class="mt-2" :message="meterForm?.errors?.y_cordinate" />
                                 </div>
 
 
@@ -758,8 +758,8 @@
            </form>
         </Modal>
 
-        
-        
+
+
                                 <div class="grid grid-cols-1  md:grid-cols-4 gap-2">
                                     <div class="flex justifyend">
                                         <div class="">
@@ -773,7 +773,7 @@
                                                 type="date"
                                                 class="mt-1 block w-full"
                                                 v-model="filterForm.from"
-                                               
+
                                             />
                                             <InputError class="mt-2" :message="filterForm?.errors?.from" />
                                     </div>
@@ -786,7 +786,7 @@
                                                 class="mt-1 block w-full"
                                                 v-model="filterForm.to"
                                                 placeholder="e.g 15"
-                                               
+
                                             />
                                             <button class="btn  px-2 py-1 p-1 oy-1 text-sm bg-optimal text-white me-2 " @click="filterRecord">Filter</button>
                                             <button class="btn  px-2 py-1 p-1 oy-1 text-sm bg-optimal text-white me-2 " @click="exportRecord">Export</button>
@@ -801,9 +801,9 @@
                                             id="longitude"
                                             type="text"
                                             class="mt-1 block w-full"
-                                           @keyup="handleKeyup" 
+                                           @keyup="handleKeyup"
                                             placeholder="enter account number or name"
-                                            
+
                                         />
                 </div>
                 <table class="min-w-full">
@@ -826,13 +826,13 @@
                             <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Photo</th>
                             <!--<th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">Connection Status</th> -->
                             <!-- <th class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">contact information</th> -->
-                            <th  class="p-3 text-sm font-semibold tracking-wide text-left table-bordered"> 
+                            <th  class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">
                                 Date
                             </th>
-                            <th  class="p-3 text-sm font-semibold tracking-wide text-left table-bordered"> 
+                            <th  class="p-3 text-sm font-semibold tracking-wide text-left table-bordered">
                                <font-awesome-icon icon="fa-solid fas fa-cog"/>
                             </th>
-                           
+
                         </tr>
                     </thead>
                     <tbody>
@@ -865,12 +865,12 @@
                             <td class="p-3 text-sm font-semibold tracking-wide text-left table-bordered" >
                                 <button class="p-1 oy-1 text-sm bg-optimal text-white me-2 inline-block rounded" @click="editRecord(item)">Edit</button>
                             </td>
-                          
+
                         </tr>
                     </tbody>
                 </table>
-                
-                
+
+
         </div>
         <div class="mt-4">
             <div class="flex space-x-1">
